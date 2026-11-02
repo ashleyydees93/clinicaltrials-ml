@@ -97,3 +97,40 @@ for study in studies:
         print("Baseline title:", measure.get("title"))
 
     print("-" * 40)
+
+
+import pandas as pd
+
+# Create a table to review our studies
+study_list = []
+
+for study in studies:
+    protocol = study.get("protocolSection", {})
+    identification = protocol.get("identificationModule", {})
+    conditions = protocol.get("conditionsModule", {})
+    status = protocol.get("statusModule", {})
+
+    study_list.append({
+        "nct_id": identification.get("nctId"),
+        "title": identification.get("briefTitle"),
+        "conditions": ", ".join(conditions.get("conditions", [])),
+        "results_first_posted": status.get("resultsFirstPostDateStruct", {}).get("date")
+    })
+
+study_df = pd.DataFrame(study_list)
+
+print(study_df.to_string(index=False))
+
+ 
+
+
+# Add screening columns
+study_df["include"] = "pending"
+study_df["reason"] = ""
+
+# Save as CSV
+study_df.to_csv("data/processed/study_screening_sample.csv", index=False)
+
+print("Screening table saved!")
+
+
