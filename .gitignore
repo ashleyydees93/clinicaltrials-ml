@@ -218,3 +218,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Downloaded ClinicalTrials.gov data
+data/raw/
+data/processed/
