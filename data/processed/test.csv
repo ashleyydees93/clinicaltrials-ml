@@ -1,0 +1,60 @@
+record_id,nct_id,text,label,reviewer,source
+5,NCT04959487,Depressive Symptoms Score (PHQ-9),Baseline,Ashley,baseline
+6,NCT05585502,Tissue Glycation Indicators (RAGE) in T2D Patients and Controls RAGE were assessed in skin biopsies as a measure of long-term glycation.,Efficacy,Caroline,outcome
+8,NCT06897618,Ethnicity (NIH/OMB),Baseline,Caroline,baseline
+15,NCT06010004,"Age, Continuous",Baseline,Ashley,baseline
+27,NCT06156696,Race (NIH/OMB),Baseline,Ashley,baseline
+29,NCT05238142,Secondary Effectiveness Endpoint - Percent of Time in Range (TIR 70-180 mg/dL) Phase 2 Transition + Naive The mean percent of time in range (TIR 70-180 mg/dL). Superiority test.,Efficacy,Ashley,outcome
+31,NCT06010004,Upper respiratory tract infection Infections and infestations,Safety,Ashley,adverse_event
+32,NCT06192108,"Percent Change From Baseline in Body Weight Values represented under ""Least Squares (LS) Mean"" are MBE of the unconditional average treatment effect. MBE were calculated using MMRM analysis for post-baseline measures, with country, baseline by time by treatment, and strata by time by treatment in the model. Strata were defined by joint levels of HbA1c level (\<=8.0%, \>8.0%). Variance-covariance structure for change from baseline was unstructured.",Efficacy,Caroline,outcome
+43,NCT04959487,"Health-related Quality of Life Score (SF-12) The standardized 12-item short form health survey (SF-12v2) was used to measure the health-related quality of life. The SF-12v2 provides a summary score for physical and mental health; here the overall score is reported (range 0-100). The transformed T-score for the overall score has a mean=50 and SD=10, in which higher values means better health.",Baseline,Ashley,baseline
+53,NCT06010004,Change From Baseline in Body Mass Index (BMI),Efficacy,Ashley,outcome
+61,NCT02088658,Region of Enrollment,Baseline,Ashley,baseline
+76,NCT06192108,Aspartate aminotransferase increased Investigations,Safety,Caroline,adverse_event
+87,NCT06010004,Race (NIH/OMB),Baseline,Ashley,baseline
+88,NCT05238142,Secondary Effectiveness Endpoint - Percent of Time in Range (TIR 70-180 mg/dL) Phase 1 The mean percent of time in range (TIR 70-180 mg/dL). Superiority test.,Efficacy,Caroline,outcome
+92,NCT06192108,Arthralgia Musculoskeletal and connective tissue disorders,Safety,Caroline,adverse_event
+109,NCT04959487,Participants With Any Hospital Admissions (prior 6 months),Baseline,Ashley,baseline
+113,NCT04203173,"Age, Continuous",Baseline,Ashley,baseline
+115,NCT04663061,Continuous Glucose Monitor Time in Range--Fasting Glucose Average time spent in normal fasting glucose between 72-85 mg/dL collected by FreeStyle Libre.,Efficacy,Ashley,outcome
+117,NCT02088658,Hemoglobin A1c,Baseline,Ashley,baseline
+119,NCT06192108,Acute myocardial infarction Cardiac disorders,Safety,Ashley,adverse_event
+123,NCT05290246,Change in Glycemic Measures- Homeostatic Model Assessment for Insulin Resistance (24w) Change in Homeostatic Model Assessment for Insulin Resistance,Efficacy,Ashley,outcome
+126,NCT05290246,Race (NIH/OMB),Baseline,Caroline,baseline
+128,NCT06156696,Body Mass Index (BMI),Baseline,Caroline,baseline
+133,NCT06010004,Epiretinal membrane Eye disorders,Safety,Ashley,adverse_event
+141,NCT04959487,Food Insecurity Score (HFSSM) Food insecurity is measured using the 10-item adult version of the USDA Household Food Security Survey Module (HFSSM). The score ranges from 0 to 10 . Higher scores indicates higher severity of food insecurity.,Baseline,Ashley,baseline
+147,NCT05035082,Hyperkalaemia Metabolism and nutrition disorders,Safety,Ashley,adverse_event
+151,NCT06192108,Tachyarrhythmia Cardiac disorders,Safety,Ashley,adverse_event
+155,NCT06192108,Coronary artery disease Cardiac disorders,Safety,Ashley,adverse_event
+168,NCT06010004,Hypertension Vascular disorders,Safety,Caroline,adverse_event
+172,NCT05530356,"Age, Continuous",Baseline,Caroline,baseline
+186,NCT06010004,Otitis media Infections and infestations,Safety,Caroline,adverse_event
+187,NCT03855449,"Sex: Female, Male",Baseline,Ashley,baseline
+188,NCT05238142,Primary Safety Endpoint - Change in HbA1c Phase 2 Naive The overall mean change in HbA1c from baseline to end of 3-month study period. Non-inferiority test.,Efficacy,Caroline,outcome
+204,NCT05238142,"Sex: Female, Male",Baseline,Caroline,baseline
+205,NCT06192108,Gas gangrene Infections and infestations,Safety,Ashley,adverse_event
+206,NCT02088658,"Age, Categorical",Baseline,Caroline,baseline
+208,NCT05585502,"Age, Continuous",Baseline,Caroline,baseline
+221,NCT05530356,Ethnicity (NIH/OMB),Baseline,Ashley,baseline
+223,NCT06192108,Cardiac pacemaker replacement Surgical and medical procedures,Safety,Ashley,adverse_event
+224,NCT04959487,"Diabetes Self-efficacy Score The 8-item Perceived Diabetes Self-Management (PDSM) scale, assesses confidence in one's ability to manage numerous self-care behaviors, including diet and glucose management. The PDSM scores ranges from 8 to 40, with higher scores indicating more confidence in self-management of diabetes.",Baseline,Caroline,baseline
+226,NCT05035082,Chromaturia Renal and urinary disorders,Safety,Caroline,adverse_event
+228,NCT05530356,"Renal Oxidative Metabolism Positron emission tomography (PET) with C-11 acetate is used to assess renal oxidative metabolism. Its outcome measure is the cortical clearance rate constant k2, expressed per minute (min\^-1). Following intravenous injection, C-11 acetate is taken up by renal tissue and converted to acetyl-CoA, which enters the tricarboxylic acid (TCA) cycle and is oxidized to C-11 CO2. The washout of C-11 activity from the tissue, modeled region by region in the renal cortex, reflects the rate of this oxidative process. The clearance rate constant k2, derived from kinetic modeling of the tissue time-activity curve, will be enhanced when oxidative metabolism and TCA cycle flux are increased. Hence, assuming tracer washout is in proportion to mitochondrial oxidation, high cortical k2 values indicate high renal oxidative metabolism, while low cortical k2 values indicate reduced renal oxidative metabolism.",Efficacy,Caroline,outcome
+229,NCT06010004,Cardiac failure Cardiac disorders,Safety,Ashley,adverse_event
+239,NCT04663061,International Physical Activity Questionnaire (IPAC) Short Form: Walking Minutes A validated self-report measure of daily physical activity levels. Responses are given as minutes per day over the last week of walking for exercise. Outcome is average total minutes/week.,Efficacy,Ashley,outcome
+240,NCT06010004,Diabetic bullosis Skin and subcutaneous tissue disorders,Safety,Caroline,adverse_event
+251,NCT05587348,Region of Enrollment,Baseline,Ashley,baseline
+252,NCT06010004,Hyponatraemia Metabolism and nutrition disorders,Safety,Caroline,adverse_event
+253,NCT05585502,Race and Ethnicity Not Collected,Baseline,Ashley,baseline
+254,NCT03855449,"Health Problem Solving Scores Outcomes Secondary outcomes on scores on the health problem-solving scale which looks at applying the process of recognizing and identifying problems, generating solutions, and making decisions to surmount specific barriers to completing self-management tasks and diabetes self-care behaviors (measuring) frequency and of self -management behaviors. The HPSS scale scores range from 4 (possible minimum score) to 28 (possible max score).
+
+Health Problem-Solving Scale (HPSS), higher scores indicate more effective problem-solving skill. There are seven subscales (Likert-scale is from zero to four and the mean scores from each subscale were summed and then an average was derived for the total score. Outcome measure data reflects the total problem solving score by arm at baseline and follow-up.",Efficacy,Caroline,outcome
+258,NCT05587348,"Diabetes Self-Efficacy Baseline The Diabetes Self-Efficacy Survey Short Form (DES-SF) is an 8-item questionnaire assessing the ability of a person to self-manage their diabetes. Participants indicate the degree to which they agree with each of the statements on a 5 point scale where 1 = strongly disagree and 5 = strongly agree. The scores are summed and divided by 8 to generate an average score that can range from 1 to 5, with 5 indicating increased self-efficacy.",Baseline,Caroline,outcome
+259,NCT05035082,Time to Treatment Intensification (add-on) or Change (Switch) in Terms of Events Time to treatment intensification (add-on) or change (switch) in terms of events from week 0 to year 1 is presented.,Efficacy,Ashley,outcome
+261,NCT05386849,Race (NIH/OMB),Baseline,Ashley,baseline
+263,NCT06010004,Heart rate increased Investigations,Safety,Ashley,adverse_event
+268,NCT03855449,BMI,Baseline,Caroline,baseline
+278,NCT06192108,"Percentage of Participants With an HbA1c Target Value of < 7.0% (53 mmol/Mol) Percentage of participants with an HbA1c target value of less than (\<) 7.0% (53 millimoles per mole \[mmol/mol\]) was analyzed using a logistic regression model with analysis country, treatment by baseline and treatment by strata in the model. Strata were defined by baseline HbA1c levels (\<=8.0% and \>8.0%). Missing Week 40 data were imputed using a multiple imputation method.",Efficacy,Caroline,outcome
+296,NCT06156696,"Percentage of Participants With an Increased Dose of Antidiabetics or Newly Started Hypoglycemics by Week 24, Relative to Antidiabetic Use at Baseline The percentage of participants with an increased dose of antidiabetics or newly started hypoglycemics by Week 24, relative to antidiabetic use at Baseline, was defined by the formula: (number of participants in the FAS with an increased dose of antidiabetics or newly started hypoglycemics by Week 24 relative to antidiabetic use at Baseline) / (number of participants in the FAS). An increased dose of antidiabetics or newly started hypoglycemics was defined as cases where the dose of antidiabetics is increased at least once or a hypoglycemic is added at least once by Week 24 compared with the dose of antidiabetics or the number of hypoglycemics at Baseline.",Efficacy,Caroline,outcome
+300,NCT04663061,"Age, Continuous",Baseline,Caroline,baseline
