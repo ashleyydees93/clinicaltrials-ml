@@ -1,3 +1,5 @@
-Model,Accuracy,F1 Macro
-Logistic Regression,0.8508847492875914,0.8412319249279478
-Naive Bayes,0.8504996401733423,0.8396381868683109
+Model,Accuracy,Macro F1,Weighted F1,Micro F1,Error Rate,GPU Support,Model Saving,Best-Model Loading,Label Prediction Report,Confusion Matrix
+Logistic Regression,0.8245614035087719,0.8281161560231327,0.8277813396540445,0.8245614035087719,0.17543859649122806,Not applicable,Yes,Not applicable,/home/carol/dsc521/clinicaltrials-ml/data/processed/logistic_regression_classification_report.txt,/home/carol/dsc521/clinicaltrials-ml/results/confusion_matrix_logistic_regression.png
+Naive Bayes,0.8070175438596491,0.8069521348591117,0.8107665805340223,0.8070175438596491,0.19298245614035092,Not applicable,Yes,Not applicable,/home/carol/dsc521/clinicaltrials-ml/data/processed/naive_bayes_classification_report.txt,/home/carol/dsc521/clinicaltrials-ml/results/confusion_matrix_naive_bayes.png
+Linear SVM,0.8070175438596491,0.8120419885125768,0.8105617579301789,0.8070175438596491,0.19298245614035092,Not applicable,Yes,Not applicable,/home/carol/dsc521/clinicaltrials-ml/data/processed/linear_svm_classification_report.txt,/home/carol/dsc521/clinicaltrials-ml/results/confusion_matrix_linear_svm.png
+BioBERT,0.8947368421052632,0.8977272727272728,0.8967304625199362,0.8947368421052632,0.10526315789473684,CPU only,Yes,Enabled with load_best_model_at_end,/home/carol/dsc521/clinicaltrials-ml/data/processed/biobert_classification_report.txt,/home/carol/dsc521/clinicaltrials-ml/results/confusion_matrix_biobert.png

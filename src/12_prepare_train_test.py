@@ -3,8 +3,8 @@ from pathlib import Path
 import pandas as pd
 from sklearn.model_selection import GroupShuffleSplit
 
-SOURCE = Path("screening/model_ready_267.csv")
-OUTPUT = Path("data/processed")
+SOURCE = Path("../screening/model_ready_267.csv")
+OUTPUT = Path("../data/processed")
 SEED = 143
 
 # Read only the reviewed, eligible measurement records.
@@ -41,4 +41,4 @@ print("Testing:", len(test), "records from", test["nct_id"].nunique(), "studies"
 print("\nTraining labels:\n", train["label"].value_counts().to_string())
 print("\nTesting labels:\n", test["label"].value_counts().to_string())
 print("\nNo studies overlap between training and testing.")
-print("Saved data/processed/train.csv and data/processed/test.csv")
+print("Saved ../data/processed/train.csv and ../data/processed/test.csv")

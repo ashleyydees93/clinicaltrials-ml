@@ -1,12 +1,19 @@
 
 import pandas as pd
+import joblib
+from pathlib import Path
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
+MODEL_DIR = PROCESSED_DIR / "models"
+MODEL_DIR.mkdir(parents=True, exist_ok=True)
+
 # Load training and testing data
-train = pd.read_csv("data/processed/train.csv")
-test = pd.read_csv("data/processed/test.csv")
+train = pd.read_csv(PROCESSED_DIR / "train.csv")
+test = pd.read_csv(PROCESSED_DIR / "test.csv")
 
 # Separate measurement text and labels
 X_train = train["text"]
@@ -42,3 +49,13 @@ print(classification_report(y_test, predictions, zero_division=0))
 print("\nConfusion Matrix:")
 labels = ["Baseline", "Efficacy", "Safety"]
 print(confusion_matrix(y_test, predictions, labels=labels))
+
+joblib.dump(
+    (vectorizer, model),
+    MODEL_DIR / "logistic_regression.joblib"
+)
+test["predicted_label"] = predictions
+test.to_csv(
+    PROCESSED_DIR / "test_predictions.csv",
+    index=False
+)
