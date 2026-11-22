@@ -29,7 +29,6 @@ comparison.plot(
     figsize=(11, 6),
     rot=0
 )
-
 plt.title("Machine Learning Model Comparison (5-Fold Grouped Cross-Validation)")
 plt.ylabel("Cross-Validation Score")
 plt.xlabel("")

@@ -1,28 +1,90 @@
 record_id,nct_id,text,label,reviewer,source
+1,NCT05856149,"Change in Diabetes Knowledge Assessment Diabetes Knowledge Assessment: A 20-item measure will assess knowledge gained due to the intervention. This measure was create by the study PI, based on the contents of the intervention. The questions are answered using true or false indicators. Each correct score receives 1-point for a total score of 20 being the highest achievable score and 0 being the lowest achievable score. The higher the score, the more knowledge the participant presents.",Efficacy,Ashley,outcome
+2,NCT04865770,Change in Kidney Function (Creatinine Clearance) (Urinalysis) Change in kidney function (creatinine clearance) (urinalysis) from baseline (week 0) to end of treatment (week 52) is presented.,Efficacy,Caroline,outcome
+3,NCT06111508,"Change in Time Above 13.9 mmol/L (250 mg/dL) Percent of time spent above (TAR2) 13.9 mmol/L (250 mg/dL) from baseline to weeks 14-16, compared between control and experimental arm. change in TAR2 = TAR2 (weeks 14-16) - TAR2 (baseline).",Efficacy,Ashley,outcome
+9,NCT03955952,"Major Adverse Cardiovascular Event (MACE-3) First occurrence of all-cause mortality, myocardial infarction or ischemic stroke",Efficacy,Ashley,outcome
+10,NCT04255433,Vaginal prolapse Reproductive system and breast disorders,Safety,Caroline,adverse_event
+11,NCT06109311,Cardiac failure Cardiac disorders,Safety,Ashley,adverse_event
+12,NCT06206525,Clinical Significant Hypoglycemia Participates developed blood glucose concentration lower than 54 mg/dL,Efficacy,Caroline,outcome
 13,NCT05971940,Cardiac failure Cardiac disorders,Safety,Ashley,adverse_event
 16,NCT05872620,"Percentage of Participants Who Achieved Hemoglobin A1c (HbA1c) Target Value (<7.0%) Percentage of participants who achieved hemoglobin A1c (HbA1c\<7%) was analysed by Logistic regression with the following variables: region + Baseline\*Time\*Treatment + Strata\*Time\*Treatment in the model. Strata were defined by joint levels of sex (female, male) and background oral AHMs classified according to their potential effect on body weight (promoting weight gain, weight reduction, or weight neutrality).",Efficacy,Caroline,outcome
+17,NCT04255433,"Diffuse large b-cell lymphoma Neoplasms benign, malignant and unspecified (incl cysts and polyps)",Safety,Ashley,adverse_event
+18,NCT03837405,Mindfulness: FFMQ Five-factor mindfulness questionnaire scale (FFMQ). Values represent an overall score summing five sub-scales. Range is 24 to 120. Higher scores indicate greater mindfulness.,Efficacy,Caroline,outcome
 19,NCT05928572,Change in Total Energy Intake Energy intake will be calculated using 24 hour dietary recalls,Efficacy,Ashley,outcome
 20,NCT05971940,"Percentage of Participants With Greater Than or Equal to (≥) 5% Body Weight Reduction Percentage of participants with ≥5% body weight reduction was analysed by Logistic regression with analysis country, treatment by baseline and treatment by strata in the model. Strata were defined by joint levels of baseline HbA1c (≤8.0%, \>8.0%) and prior use of any antihyperglycemic medication (yes or no).",Efficacy,Caroline,outcome
 21,NCT05046886,"Age, Continuous",Baseline,Ashley,baseline
 23,NCT05872620,"Percentage of Participants Who Achieved ≥15% Body Weight Reduction From Baseline Percentage of participants with ≥15% body weight reduction was analysed by Logistic regression with the following variables: region + Baseline\*Time\*Treatment + Strata\*Time\*Treatment in the model. Strata were defined by joint levels of sex (female, male) and background oral AHMs classified according to their potential effect on body weight (promoting weight gain, weight reduction, or weight neutrality).",Efficacy,Ashley,outcome
+25,NCT06111508,Basal Insulin Dose Changes The investigator changes the dose from baseline to week 16,Efficacy,Ashley,outcome
+26,NCT05227677,triglyceride,Baseline,Caroline,baseline
+28,NCT04916470,Change in Glycated Haemoglobin (HbA1c) Change in HbA1c from baseline (week 0) to end of treatment (week 52) is presented. The outcome data was evaluated based on the in-trial observation period. The in-trial period was defined as the time interval from date of randomisation to date of last contact with trial site (or date of withdrawal of informed consent or death).,Efficacy,Caroline,outcome
 33,NCT05553912,"Clinician Satisfaction Survey Clinicians will rate their satisfaction with the approach used during the encounter on a 5-point Likert scale, which could have been usual care alone or usual care with the QBSafe ASK.",Efficacy,Ashley,outcome
+34,NCT06109311,Polycythaemia Blood and lymphatic system disorders,Safety,Caroline,adverse_event
+35,NCT06206525,First blood glucose on presentation,Baseline,Ashley,baseline
+36,NCT04255433,"Injury Injury, poisoning and procedural complications",Safety,Caroline,adverse_event
+37,NCT04596631,"Change From Baseline in Body Mass Index Standard Deviation Score at Week 52 This outcome measure reports change from baseline to week 52 in BMI measured in terms of SDS. BMI SDS was calculated based on the WHO 2007 growth reference for children and adolescents.
+
+The BMI SDS formula comes from the LMS method: Z = (\[BMI/M)\]\^L-1)/ L×S where: L=Skewness (Box-Cox power), M=Median, S= (Coefficient of Variation)",Efficacy,Ashley,outcome
+38,NCT04255433,Sjogren's syndrome Musculoskeletal and connective tissue disorders,Safety,Caroline,adverse_event
+40,NCT04255433,Pneumonia viral Infections and infestations,Safety,Caroline,adverse_event
 41,NCT05986097,PROMIS Fatigue T-score,Baseline,Ashley,baseline
+44,NCT05649137,"Age, Continuous",Baseline,Caroline,baseline
+45,NCT04255433,Neutropenic colitis Gastrointestinal disorders,Safety,Ashley,adverse_event
+46,NCT06109311,"Joint dislocation Injury, poisoning and procedural complications",Safety,Caroline,adverse_event
+47,NCT04255433,Acid-base balance disorder mixed Metabolism and nutrition disorders,Safety,Ashley,adverse_event
+48,NCT04596631,Change From Baseline (Week 0) in Calcitonin to Week 26 and Week 52 This outcome measure reports change in calcitonin from baseline to week 26 and week 52.,Efficacy,Caroline,outcome
+49,NCT06111508,"Sex: Female, Male",Baseline,Ashley,baseline
 50,NCT04334109,"Triglycerides Through finger prick blood collection, point of care tests were used to collect triglycerides using a commercial lipid panel kit and Cholestech LDX analyzer.",Efficacy,Caroline,outcome
+51,NCT07265245,Race and Ethnicity Not Collected,Baseline,Ashley,baseline
 52,NCT04426474,"Age, Continuous",Baseline,Caroline,baseline
+54,NCT04255433,Wound infection bacterial Infections and infestations,Safety,Caroline,adverse_event
 55,NCT04725890,"Sex: Female, Male",Baseline,Ashley,baseline
+56,NCT05925920,Ethnicity (NIH/OMB),Baseline,Caroline,baseline
+57,NCT05227677,HOMA-β,Baseline,Ashley,baseline
 58,NCT05971940,HemoglobinA1c (HbA1c) HbA1c is the glycosylated fraction of hemoglobin A. It is measured to identify average plasma glucose concentration over prolonged periods of time.,Baseline,Caroline,baseline
+59,NCT05514535,"Hydrocele Congenital, familial and genetic disorders",Safety,Ashley,adverse_event
+60,NCT04255433,Arrhythmia prophylaxis Surgical and medical procedures,Safety,Caroline,adverse_event
+62,NCT05860413,"Sex: Female, Male",Baseline,Caroline,baseline
+64,NCT05925920,Headache Nervous system disorders,Safety,Caroline,adverse_event
+65,NCT05370612,Rates of NICU Admission,Safety,Ashley,outcome
 66,NCT05971940,Early satiety General disorders,Safety,Caroline,adverse_event
 67,NCT04828785,Number of Participants With Self-reported Severe Hypoglycemia at Month 12 Reported severe hypoglycemia between 6 and 12 months after randomization,Safety,Ashley,outcome
+68,NCT04255433,"Compression fracture Injury, poisoning and procedural complications",Safety,Caroline,adverse_event
 69,NCT05872620,"Change From Baseline in Systolic Blood Pressure (SBP) (Pooled Doses of Orforglipron 6 mg, 12 mg and 36 mg) Values represented under Least Squares (LS) Mean are model-based estimates (MBE) of the unconditional average treatment effect. MBE was calculated using a mixed-model repeated measures (MMRM) for post-baseline measures with region + Baseline\*Time\*Treatment + Strata\*Time\*Treatment in the model. Strata were defined by joint levels of sex (female, male) and background oral AHMs classified according to their potential effect on body weight (promoting weight gain, weight reduction, or weight neutrality). Variance-covariance structure for change from baseline was unstructured.",Efficacy,Ashley,outcome
+70,NCT03899883,Ethnicity (NIH/OMB),Baseline,Caroline,baseline
+71,NCT05514535,"Age, Continuous",Baseline,Ashley,baseline
+72,NCT06401733,"Change in Cognitive Function Based on Risk Stratification Score (RSS) Pre- and post-intervention measurements were conducted to assess the Risk Stratification Score (RSS).
+
+RSS scores range from -3.4 to 6.8; higher scores represent worse outcomes.",Efficacy,Caroline,outcome
+73,NCT04286555,Mean Continuous Glucose Monitoring Sensor Glucose CGM Ancillary Study Primary Outcome: Continuous glucose monitoring sensors will be worn up to 14 days during each 5-week feeding period in participants included in the DASH4D-CGM ancillary study. The mean of these glucose measurements (in mg/dL) during the 14-day wear period will be used as a primary outcome of the corresponding feeding period.,Efficacy,Ashley,outcome
 74,NCT05872620,"Percentage of Participants Who Achieved With Greater Than or Equal to (≥) 5% Body Weight Reduction From Baseline Percentage of participants with ≥5% body weight reduction was analysed by Logistic regression with the following variables: region + Baseline\*Time\*Treatment + Strata\*Time\*Treatment in the model. Strata were defined by joint levels of sex (female, male) and background oral AHMs classified according to their potential effect on body weight (promoting weight gain, weight reduction, or weight neutrality).",Efficacy,Caroline,outcome
+75,NCT05227677,Change in HbA1c Levels To compare the change of HbA1c levels between the two groups after 12-week of follow-up.,Efficacy,Ashley,outcome
+77,NCT04916470,"Participants Achieving 20% Weight Loss or More (Yes/No) Participants achieving 20% weight loss or more (Yes/No) at week 52 is presented. In the reported data, 'Yes' infers number of participants who have achieved 20% weight loss or more whereas 'No' infers number of participants who have not achieved 20% weight loss or more. The outcome data was evaluated based on the in-trial observation period. The in-trial period was defined as the time interval from date of randomisation to date of last contact with trial site (or date of withdrawal of informed consent or death).",Efficacy,Ashley,outcome
+78,NCT05925920,"Age, Continuous",Baseline,Caroline,baseline
 79,NCT06370715,"Age, Continuous",Baseline,Ashley,baseline
+80,NCT03940209,"Sex: Female, Male",Baseline,Caroline,baseline
+81,NCT04286555,"Presence of Orthostatic Hypotension Participants will lie in the supine position for 5 minutes and undergo three blood pressure measurements, separated by 30 seconds. The average of these three readings will be used as the supine blood pressure. Participants will stand with their arm rested on an adjacent Mayo table at 70-80 degrees from their torso, and participants will then undergo another set of triplicate blood pressure measurements, separated by 30 seconds each. The average of these three readings will be used as the standing blood pressure. Presence of orthostatic hypotension will be defined as ≥ 20 mmHg drop in systolic blood pressure or a ≥ 10 mmHg drop in diastolic blood pressure upon standing.",Safety,Ashley,outcome
 82,NCT07513259,"Pericardial Effusion (Comparison 2) Pericardial effusion within 36 months after obesity-associated cancer diagnosis in the propensity score-matched cohort for Comparison 2, comparing adults with obesity and type 2 diabetes treated with GLP-1 receptor agonist without prior DPP-4 inhibitor use versus DPP-4 inhibitor-treated adults.",Efficacy,Caroline,outcome
+84,NCT05394844,Percent Change in BMI percent change BMI ((kg/m2),Efficacy,Caroline,outcome
+85,NCT04865770,"Change in Kidney Inflammation (Cortex), Longitudinal Relaxation Time (T1) Mapping (MRI) Change in kidney inflammation in cortex assessed by T1 mapping MRI from baseline (week 0) to end of treatment (week 52) is presented.",Efficacy,Ashley,outcome
+86,NCT05394844,"Sex: Female, Male",Baseline,Caroline,baseline
+89,NCT04286555,Percentage of Time Glucose Above 250 mg/dL CGM Ancillary Study Secondary Outcome: Continuous glucose monitoring sensors will be worn up to 14 days during each 5-week feeding period in participants included in the DASH4D-CGM ancillary study. The percentage of time glucose was above 250 mg/dL during the 14-day wear period will be used as a secondary outcome of the corresponding feeding period.,Efficacy,Ashley,outcome
+90,NCT07030868,"Sex: Female, Male",Baseline,Caroline,baseline
 94,NCT05120544,"Pancreatic mass Neoplasms benign, malignant and unspecified (incl cysts and polyps)",Safety,Caroline,adverse_event
+95,NCT04255433,"Metastases to lymph nodes Neoplasms benign, malignant and unspecified (incl cysts and polyps)",Safety,Ashley,adverse_event
 96,NCT04828785,Number of Participants With Self-reported Severe Hypoglycemia at Month 6 Reported severe hypoglycemia between 0 and 6 months after randomization,Efficacy,Caroline,outcome
+97,NCT05232071,"Age, Continuous",Baseline,Ashley,baseline
+98,NCT03837405,"Frequency of Eating in Response to Cravings Frequency of eating in response to cravings (indulgence) using ecological momentary assessment (EMA), operationalized as the percent of solicited occasions when a participant reported eating in response to cravings (rather than in response merely to hunger). Participants received 18 queries about eating in response to cravings over 3 days. Participants had to respond to at least 9 queries to have adequate data completeness for analysis. Frequency of eating in response to cravings is the proportion (scaled as a percent) of queries that participants responded to with responses that reported eating in response to cravings.",Efficacy,Caroline,outcome
+99,NCT06109311,"Change From Baseline in Fasting Serum Glucose (FSG) Values represented under ""Least Squares (LS) Mean"" are model-based estimates (MBE) of the unconditional average treatment effect. MBE was calculated using a mixed-model repeated measures (MMRM) with analysis country, treatment by time, baseline by time by treatment, and strata by time by treatment in the model. Strata was defined by joint levels of baseline HbA1c (≤ \[less than or equal to\] 8.0%, \> \[greater than\] 8.0%) and SGLT-2 inhibitor use at randomization \[Yes or No\]. Variance-covariance structure for change from baseline was unstructured.",Efficacy,Ashley,outcome
 100,NCT04227379,"Race/Ethnicity, Customized",Baseline,Caroline,baseline
 101,NCT05971940,Oesophagitis Gastrointestinal disorders,Safety,Ashley,adverse_event
+102,NCT03207711,"Race/Ethnicity, Customized",Baseline,Caroline,baseline
+104,NCT04255433,Volvulus of small bowel Gastrointestinal disorders,Safety,Caroline,adverse_event
 105,NCT04725890,Number of Participants With Device- or Procedure-related Serious Adverse Events (SAE) Number of participants experiencing one or more device- or procedure-related serious adverse events at 12 weeks post procedure,Efficacy,Ashley,outcome
 106,NCT05971940,Haemoglobin decreased Investigations,Safety,Caroline,adverse_event
+107,NCT05856149,"Age, Continuous",Baseline,Ashley,baseline
+108,NCT03955952,"Sex: Female, Male",Baseline,Caroline,baseline
+110,NCT05360056,"Age, Categorical",Baseline,Caroline,baseline
+111,NCT03899883,Urine Albumin-creatinine Ratio Measured by albumin and creatinine concentrations in urine,Efficacy,Ashley,outcome
 112,NCT05120544,"Change in Diabetes Knowledge Diabetes Knowledge Questionnaire (DKQ) is a 24-item validated measure.
 
 Diabetes Knowledge
@@ -35,51 +97,108 @@ Diabetes Knowledge
 116,NCT05971940,Hypersensitivity Immune system disorders,Safety,Caroline,adverse_event
 118,NCT05971940,Hypophosphataemia Metabolism and nutrition disorders,Safety,Caroline,adverse_event
 120,NCT06575478,"Change in HbA1c Concentrations (%) From Baseline Change in HbA1c concentrations (%) from baseline is the numerical difference between a participant's hemoglobin A1c (HbA1c) level at a specified follow-up time point(s) and their baseline level (initial assessment before intervention). HbA1c, a glycated hemoglobin biomarker, reflects average blood glucose over 8-12 weeks. Venous blood is collected via standard phlebotomy, and HbA1c is quantified using a laboratory-certified method (e.g., high-performance liquid chromatography \[HPLC\] or immunoassay) for accuracy. Calculated as: Follow-up HbA1c (%) - Baseline HbA1c (%), positive values mean increased average blood glucose, negative values mean decreased. This metric evaluates intervention efficacy (e.g., medications, lifestyle modifications) for glycemic control in diabetes or prediabetes populations.",Efficacy,Caroline,outcome
+122,NCT04255433,Vomiting Gastrointestinal disorders,Safety,Caroline,adverse_event
+124,NCT04916470,"Squamous cell carcinoma Neoplasms benign, malignant and unspecified (incl cysts and polyps)",Safety,Caroline,adverse_event
 127,NCT06370715,"Rate of Documented Hypoglycemia With Blood Glucose <54 mg/dL Rate of documented hypoglycemia (events/participant/year) was calculated as the sum of documented hypoglycemic episodes divided by the cumulative days on treatment from all participants, multiplied by 365.",Safety,Ashley,outcome
 129,NCT06340854,"Number of Clinically Significant Hypoglycaemic Episodes (Level 2) (<3.0 mmol/L (54 mg/dL), Confirmed by Blood Glucose (BG) Meter) Number of clinically significant hypoglycaemic episodes (level 2) (\<3.0 mmol/L (54 mg/dL), confirmed by BG meter) from baseline (week 0) to week 31 is presented.",Safety,Ashley,outcome
 130,NCT05971940,Lenticular opacities Eye disorders,Safety,Caroline,adverse_event
 131,NCT06575478,"Change in FPG (mmol/L) From Baseline Change in Fasting Plasma Glucose (FPG) (mmol/L) from baseline is the numerical difference between a participant's FPG level at follow-up and their baseline FPG. FPG measures plasma glucose concentration after an 8-12 hour fast, reflecting overnight glycemic control. Venous blood samples are collected via standard phlebotomy, with glucose quantified using laboratory methods (e.g., hexokinase assay). Calculated as: Follow-up FPG (mmol/L) - Baseline FPG (mmol/L), positive values indicate increased fasting glucose, negative values a decrease. This metric assesses intervention efficacy in regulating fasting glycemia, critical for diabetes management.",Efficacy,Ashley,outcome
 132,NCT04970810,Number of Participants With Documentation of Diabetes Goal at Baseline and Month 12 We reviewed the electronic health records (EHR) to assess how many participants had a documented goal in the EHR at baseline and at 12 months. The possible values will be yes or no goals documented in the EHR.,Efficacy,Caroline,outcome
+134,NCT04916314,Change in LDL Cholesterol From Baseline Change in participants' LDL cholesterol from baseline to 3 and 12 months,Efficacy,Caroline,outcome
 136,NCT04828785,Housing Insecurity Score at Month 12 Self-report of being worried about losing housing,Efficacy,Caroline,outcome
+138,NCT06109311,Musculoskeletal stiffness Musculoskeletal and connective tissue disorders,Safety,Caroline,adverse_event
+139,NCT03899883,Mean arterial pressure Mean arterial pressure measured by sphygmomanometer,Baseline,Ashley,baseline
+140,NCT04916470,"Renal cancer metastatic Neoplasms benign, malignant and unspecified (incl cysts and polyps)",Safety,Caroline,adverse_event
+142,NCT06109311,"Sleep apnoea syndrome Respiratory, thoracic and mediastinal disorders",Safety,Caroline,adverse_event
+143,NCT04167761,Region of Enrollment,Baseline,Ashley,baseline
 144,NCT05120544,"Race/Ethnicity, Customized",Baseline,Caroline,baseline
+146,NCT05014204,Constipation Gastrointestinal disorders,Safety,Caroline,adverse_event
+148,NCT05360056,Race (NIH/OMB),Baseline,Caroline,baseline
 149,NCT05139914,"Sex: Female, Male",Baseline,Ashley,baseline
+150,NCT04916470,Peripheral arterial occlusive disease Vascular disorders,Safety,Caroline,adverse_event
 152,NCT04725890,Presyncope Cardiac disorders,Safety,Caroline,adverse_event
+153,NCT06206525,Race and Ethnicity Not Collected,Baseline,Ashley,baseline
 154,NCT04334109,"Diabetes Self-Care Behaviors (SDSCA): Fatty Foods Items from the Summary of Diabetes Self-Care Activities (SDSCA) were used to assess engagement in diabetes self-care behaviors over the past week. This item assessed how often participants ate high fat foods such as red meat or full-fat dairy over the past week. Item responses range from 0 days to 7 days, with higher scores indicating more frequent behavior (more days in the past week). Items in the SDSCA scale were analyzed separately.",Efficacy,Caroline,outcome
+156,NCT04286555,"Age, Continuous",Baseline,Caroline,baseline
 157,NCT04881799,"Sex: Female, Male",Baseline,Ashley,baseline
 158,NCT05553912,Mean Count Diabetes Medications Mean number diabetes medications participants are taking,Baseline,Caroline,baseline
 159,NCT05872620,Flatulence Gastrointestinal disorders,Safety,Ashley,adverse_event
+160,NCT04255433,Retinal tear Eye disorders,Safety,Caroline,adverse_event
+161,NCT06401733,"Change in Self-related and Health Practice (SRAHP) Pre- and post-intervention measurements were conducted. Measure the change in self-perceived ability to implement health-promoting behaviours, which include subscales of Exercise, Nutrition, Responsible Health Practice, and Psychological Well-being. The scores range from 0 to 112; a higher score means a better outcome.",Efficacy,Ashley,outcome
+162,NCT04916470,Cholecystitis acute Hepatobiliary disorders,Safety,Caroline,adverse_event
+163,NCT04916470,Sudden cardiac death General disorders,Safety,Ashley,adverse_event
+164,NCT03940209,"Age, Continuous",Baseline,Caroline,baseline
 165,NCT04828785,Diabetes Self-Care Activities Medication Adherence Score at Month 12 Medication Adherence as assessed by 1-item summary of diabetes self-care activities measure. Scores range from 0-7 with higher scores indicating better adherence.,Efficacy,Ashley,outcome
 166,NCT05553912,BMI categories,Baseline,Caroline,baseline
 169,NCT06370715,Change From Baseline in 1- and 2-hour Postprandial Glucose (PPG) Values Estimated From Self-monitored Blood Glucose (SMBG) Values,Efficacy,Ashley,outcome
+170,NCT04255433,Hyperkalaemia Metabolism and nutrition disorders,Safety,Caroline,adverse_event
 171,NCT05553912,HbA1c categories,Baseline,Ashley,baseline
+174,NCT04916314,"Sex/Gender, Customized",Baseline,Caroline,baseline
 175,NCT04203147,Glycemic Control (HbA1c) About 10cc of blood will be drawn by trained phlebotomists and sent to the lab for HbA1c.,Efficacy,Ashley,outcome
 176,NCT05928572,Body Weight,Baseline,Caroline,baseline
+177,NCT05227677,Systolic blood pressure,Baseline,Ashley,baseline
+178,NCT05727579,"Age, Continuous Mean age of population with standard deviation",Baseline,Caroline,baseline
 180,NCT02107976,"Age, Continuous age at time of enrollment",Baseline,Caroline,baseline
+181,NCT04916470,Herpes zoster Infections and infestations,Safety,Ashley,adverse_event
 182,NCT07513259,"Pericardial Effusion (Comparison 1) Pericardial effusion within 36 months after obesity-associated cancer diagnosis in the propensity score-matched cohort for Comparison 1, comparing adults with obesity and type 2 diabetes treated with GLP-1 receptor agonist without prior SGLT2 inhibitor use versus SGLT2 inhibitor-treated adults.",Safety,Caroline,outcome
 183,NCT05872620,Diverticulum intestinal Gastrointestinal disorders,Safety,Ashley,adverse_event
+184,NCT04255433,Spermatic cord funiculitis Infections and infestations,Safety,Caroline,adverse_event
 185,NCT05139914,"Age, Categorical",Baseline,Ashley,baseline
 191,NCT04226027,Employment,Baseline,Ashley,baseline
+192,NCT04255433,Cervical spinal stenosis Musculoskeletal and connective tissue disorders,Safety,Caroline,adverse_event
 195,NCT05553912,Medical Insurance,Baseline,Ashley,baseline
 196,NCT04426474,Ethnicity (NIH/OMB),Baseline,Caroline,baseline
 197,NCT05046886,"HbA1c Levels Glycosylated hemoglobin will be evaluated from blood sampling (\~10 ml) obtained during Clinical Translational Research Center (CTRC) measurement visits, evaluated in the NYU CLIA-certified lab. . Levels from 5.7% to 6.4% indicate prediabetes, while 6.5% or higher typically indicates a diabetes diagnosis.",Efficacy,Ashley,outcome
+200,NCT05227677,Serum uric acid,Baseline,Caroline,baseline
 201,NCT05971940,"Age, Continuous",Baseline,Ashley,baseline
 202,NCT06340854,"Interstitial lung disease Respiratory, thoracic and mediastinal disorders",Safety,Caroline,adverse_event
 203,NCT05971940,Dengue haemorrhagic fever Infections and infestations,Safety,Ashley,adverse_event
+207,NCT04916470,Cerebrovascular accident Nervous system disorders,Safety,Ashley,adverse_event
+210,NCT04255433,"Hepatic cancer metastatic Neoplasms benign, malignant and unspecified (incl cysts and polyps)",Safety,Caroline,adverse_event
+212,NCT05649137,"Acute respiratory failure Respiratory, thoracic and mediastinal disorders",Safety,Caroline,adverse_event
+213,NCT06401733,"Number of Participants With Change in Cognitive Function (Cognitive Impairment) Based on Vascular Dementia Battery (VDB) Pre- and post-intervention measurements were conducted to assess the number of participants with change in cognitive function (Cognitive Impairment). This outcome reports the count of participants with Cognitive Impairment (CI) in each group at both assessments. A decrease in this count from Pre to Post indicates improved group cognitive function; an increase indicates worsened function.
+
+CI was diagnosed per Vascular Dementia Battery (VDB) criteria as a score below the clinical cutoff in any of its seven domains: executive function (score range 0-18), attention (score range 0-60), language (score range 0-15), verbal memory (score range 0-110), visual memory (score range 0-117), visuoconstruction (score range 0-97), and visuomotor speed (score range 0-150), where a higher score means a better outcome.",Efficacy,Ashley,outcome
+214,NCT04255433,"Periprosthetic fracture Injury, poisoning and procedural complications",Safety,Caroline,adverse_event
+215,NCT05813912,"Age, Continuous",Baseline,Ashley,baseline
 216,NCT04203147,"Sex: Female, Male",Baseline,Caroline,baseline
+219,NCT04286555,"Glucose Coefficient of Variation (%) CGM Ancillary Study Primary Outcome: Continuous glucose monitoring sensors will be worn up to 14 days during each 5-week feeding period in participants included in the DASH4D-CGM ancillary study. The glucose coefficient of variation (standard deviation divided by mean glucose, multiplied by 100 and expressed as a percent) during the 14-day wear period will be used as a primary outcome of the corresponding feeding period.",Efficacy,Ashley,outcome
+222,NCT06111508,Ethnicity (NIH/OMB),Baseline,Caroline,baseline
+225,NCT05813912,"Number of Clinically Significant Hypoglycaemic Episodes (Level 2) (Less Than [<] 3.0 mmol/L [54 Milligrams Per Deciliter {mg/dL}], Confirmed by Blood Glucose [BG] Meter) Number of clinically significant hypoglycaemic episodes (level 2) (\<3.0 mmol/L (54 mg/dL), confirmed by BG meter) is presented. Clinically significant hypoglycaemia (level 2) is defined as plasma glucose value of (\<) 3.0 mmol/L (54 mg/dL) confirmed by BG meter. The outcome data was evaluated based on the Treatment-phase-on-treatment period. The Treatment-phase-on-treatment period was all observed data from time of the intensification week 26 until 6 weeks after last date of either insulin icodec or semaglutide treatment (whichever comes last).",Safety,Ashley,outcome
+227,NCT05394844,"Age, Continuous",Baseline,Ashley,baseline
 230,NCT05986097,"Age, Continuous",Baseline,Caroline,baseline
+232,NCT04596631,Number of Events With Initiation of Additional Anti-diabetic Medication This outcome measure reports number of events with initiation of additional anti-diabetic medication . Anti-diabetic medication was defined as new anti-diabetic medication and/or intensification of anti-diabetic medication initiated at or after randomization and before (planned) end-of-treatment.,Efficacy,Caroline,outcome
+234,NCT05360056,"Sex: Female, Male",Baseline,Caroline,baseline
+236,NCT03940209,HbA1c Glycated haemoglobin (A1c) values will be abstracted from participants' medical record lab reports,Efficacy,Caroline,outcome
 241,NCT06370715,"Rhinitis allergic Respiratory, thoracic and mediastinal disorders",Safety,Ashley,adverse_event
+242,NCT04255433,Oral disorder Gastrointestinal disorders,Safety,Caroline,adverse_event
 243,NCT04227379,Education,Baseline,Ashley,baseline
+244,NCT04255433,"Mantle cell lymphoma stage i Neoplasms benign, malignant and unspecified (incl cysts and polyps)",Safety,Caroline,adverse_event
 245,NCT04226027,Race (NIH/OMB),Baseline,Ashley,baseline
+246,NCT04255433,Encephalitis autoimmune Nervous system disorders,Safety,Caroline,adverse_event
 248,NCT04426474,Back pain Musculoskeletal and connective tissue disorders,Safety,Caroline,adverse_event
 249,NCT05986097,"Change in PROMIS Anxiety T-score The 4-item PROMIS subscale for anxiety measures the extent to which patients experience depressive symptoms over the past 7 days using a 5-point Likert scale. The subscale is measured using T-scores (mean 50, SD 10), with higher scores reflecting greater depression. To assess the effects of dietary changes on anxiety, the change in PROMIS anxiety T-scores from baseline to 4 months was evaluated.",Efficacy,Ashley,outcome
 255,NCT05928572,Change in CGM-derived % Time Above >250 mg/dL % time above \>250 mg/dL is considered a core CGM metric; time above range. This will be described as the 24-hour period,Efficacy,Ashley,outcome
+256,NCT04865770,Change in Apparent Diffusion Coefficient (ADC) (Cortex) (MRI) Change in apparent diffusion coefficient in cortex assessed by MRI from baseline (week 0) to end of treatment (week 52) is presented.,Efficacy,Caroline,outcome
+257,NCT04916314,"Change in Triglycerides, From Baseline Change in participants' triglycerides from baseline to 3 and 12 months",Efficacy,Ashley,outcome
+262,NCT05232071,Change in Body Weight and Body Composition (VAT/SAT Ratio) Ratio VAT / SAT - Results for Relative Change from Baseline VAT : MRI L3 visceral adipose tissue SAT : MRI L3 subcutaneous adipose tissue,Efficacy,Caroline,outcome
+265,NCT05856149,Percent Weight Change at Intervention Completion Weight will be assessed using a scale at study visits. Research staff will then use this number to calculate percent weight loss over time.,Efficacy,Ashley,outcome
+266,NCT04255433,Constipation Gastrointestinal disorders,Safety,Caroline,adverse_event
 267,NCT05928572,HbA1c,Baseline,Ashley,baseline
 270,NCT04828785,Food/Medication Trade-offs at Month 6 Single item-indicators of trading off medication for food or food for medication. An affirmative response indicates the presence of a trade-off.,Efficacy,Caroline,outcome
 271,NCT05120544,Diabetic foot infection Infections and infestations,Safety,Ashley,adverse_event
+272,NCT03207711,Fasting Glucose Change in plasma fasting glucose from baseline to 6 months by study arm,Efficacy,Caroline,outcome
+274,NCT05370612,"Satisfaction and Quality of Life Survey - How Satisfied Are You Currently With the Amount of Time it Takes to Manage Your Diabetes? A custom survey for Satisfaction and Quality of Life will be administered and answers will be compared between groups. Questions include answers on a 7-point Likert scale, where 1 = very dissatisfied and 7 = very satisfied",Efficacy,Caroline,outcome
+275,NCT05813912,Relative Change in Weekly Insulin Icodec Dose Relative change in weekly insulin icodec dose from week 25 to week 52 is presented.,Efficacy,Ashley,outcome
 276,NCT04227379,Rurality,Baseline,Caroline,baseline
 280,NCT04725890,Fasting Plasma Glucose by Visit Mean Fasting Plasma Glucose by Visit,Efficacy,Caroline,outcome
 282,NCT04227379,Intracerebral hemorrhage Vascular disorders,Safety,Caroline,adverse_event
+283,NCT04916470,Pericarditis Cardiac disorders,Safety,Ashley,adverse_event
 285,NCT04334109,"Diabetes Self-Care Behaviors (SDSCA): Blood Sugar Test Items from the Summary of Diabetes Self-Care Activities (SDSCA) were used to assess engagement in diabetes self-care behaviors over the past week. This item assessed how often participants tested their blood sugar over the past week. Item responses range from 0 days to 7 days, with higher scores indicating more frequent behavior (more days in the past week). Items in the SDSCA scale were analyzed separately.",Efficacy,Ashley,outcome
 286,NCT07513259,"Inpatient (Comparison 1) Inpatient within 36 months after obesity-associated cancer diagnosis in the propensity score-matched cohort for Comparison 1, comparing adults with obesity and type 2 diabetes treated with GLP-1 receptor agonist without prior SGLT2 inhibitor use versus SGLT2 inhibitor-treated adults.",Efficacy,Caroline,outcome
+288,NCT05649137,"Nasal septum deviation Respiratory, thoracic and mediastinal disorders",Safety,Caroline,adverse_event
+289,NCT03837405,Salzburg Stress Eating Scale Change in stress-related eating as measured by Salzburg Stress Eating Scale. Range is from 1 to 5. Higher scores indicate greater stress-related eating.,Efficacy,Ashley,outcome
+290,NCT03940209,"Social Needs Social needs count of 12 dichotomous variables: needs were considered met (=0) when they were very unlikely or unlikely to arise in the next month; all other responses identified unmet needs (=1). Items assessed the likelihood that personal \& neighborhood safety, housing, space in home, food, transportation, child care, social interaction, financial (utilities, necessities, unexpected expenses) and other (fill in need) would be met in the next month. Per eligibility, all participants were required to report at least one need at baseline. Higher values indicate greater social needs reported.",Baseline,Caroline,baseline
+291,NCT05227677,Homeostasis Model Assessment of Insulin Resistance (HOMA-IR),Baseline,Ashley,baseline
 292,NCT06340854,Acquired oesophageal web Gastrointestinal disorders,Safety,Caroline,adverse_event
 294,NCT07513259,"Sepsis (Comparison 3) Sepsis within 36 months after obesity-associated cancer diagnosis in the propensity score-matched cohort for Comparison 3, comparing adults with obesity and type 2 diabetes treated with GLP-1 receptor agonist without prior sulfonylurea use versus sulfonylurea-treated adults.",Safety,Caroline,outcome

@@ -94,10 +94,9 @@ for i, name in enumerate(model_names):
     vals = summary.set_index("Model").loc[name, [f"F1 {l}" for l in LABELS]].values
     bars = ax.bar(x + (i - 1.5) * (width + 0.01), vals, width,
                   color=SERIES[i], label=name, edgecolor="white", linewidth=1)
-    if name == "BioBERT":
-        for b, v in zip(bars, vals):
-            ax.text(b.get_x() + b.get_width() / 2, v + 0.01, f"{v:.2f}",
-                    ha="center", va="bottom", fontsize=8, color=INK)
+    for b, v in zip(bars, vals):
+        ax.text(b.get_x() + b.get_width() / 2, v + 0.01, f"{v:.2f}",
+            ha="center", va="bottom", fontsize=8, color=INK)
 ax.set_xticks(x, LABELS)
 ax.set_ylim(0.6, 1.0)
 ax.set_ylabel("F1 score (held-out test set)")

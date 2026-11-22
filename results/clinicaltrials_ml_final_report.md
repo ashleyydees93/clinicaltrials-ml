@@ -6,7 +6,7 @@
 
 ## Abstract
 
-We collected every Type 2 diabetes study on ClinicalTrials.gov whose results were first posted between **November 3, 2025 and November 2, 2026** (121 studies) and screened them with written eligibility rules (89 eligible). From these studies we extracted **6,943 measurement records** (baseline characteristics, outcome measures, and adverse events). We then manually labeled a stratified sample as **Baseline**, **Efficacy**, or **Safety**, which gave 267 model-ready records from 76 studies. We trained four text classifiers: TF-IDF + Logistic Regression, TF-IDF + Multinomial Naive Bayes, TF-IDF + Linear SVM, and fine-tuned **BioBERT**. We evaluated them on **191 records from 54 held-out studies** that were never seen in training. All four models far outperform the most-frequent-class baseline (macro-F1 0.157). The three TF-IDF models were nearly tied at a macro-F1 of about 0.86. BioBERT's settings were chosen on validation studies only, never the test set, and it was trained with five random seeds. It **performed best**, with a macro-F1 of 0.905 ± 0.024 across seeds (0.879 for the pre-specified seed). BioBERT beat Logistic Regression (0.865) on all five seeds, by +0.040 macro-F1 on average. However, the 95% study-level confidence interval for that gap (−0.016 to +0.093) includes zero. BioBERT is therefore probably, but not demonstrably, better than Logistic Regression on this data.
+We collected every Type 2 diabetes study on ClinicalTrials.gov whose results were first posted between **November 3, 2025 and November 2, 2026** (121 studies) and screened them with written eligibility rules (89 eligible). From these studies we extracted **6,943 measurement records** (baseline characteristics, outcome measures, and adverse events). We then manually labeled a stratified sample as **Baseline**, **Efficacy**, or **Safety**, which gave 267 model-ready records from 76 studies. We trained four text classifiers: TF-IDF + Logistic Regression, TF-IDF + Multinomial Naive Bayes, TF-IDF + Linear SVM, and fine-tuned **BioBERT**. We trained on 189 records from 53 studies and evaluated on **78 records from 23 held-out studies** that were never seen in training. All four models far outperform the most-frequent-class baseline (macro-F1 0.147). The three TF-IDF models were nearly tied, with macro-F1 between 0.879 and 0.890. BioBERT's settings were chosen on validation studies only, never the test set, and it was trained with five random seeds. It **performed best**, with a macro-F1 of 0.932 ± 0.015 across seeds (0.928 for the pre-specified seed). BioBERT beat Logistic Regression (0.879) on all five seeds, by +0.053 macro-F1 on average, and the seed-averaged 95% study-level confidence interval for that gap (+0.004 to +0.117) excludes zero. BioBERT is therefore better than Logistic Regression on this data, although the lower end of the interval is close to zero and the exact size of the advantage is uncertain with a 23-study test set.
 
 ---
 
@@ -51,8 +51,8 @@ Both researchers screened the studies using the written rules in `screening/scre
 | Stratified labeling sample (100 per source section) | 77 | 300 |
 | Excluded during label review (see §2.4) | 12 | 33 |
 | Model-ready after review | **76** | **267** |
-| Training split | 22 | 76 |
-| Held-out test split | 54 | 191 |
+| Training split | 53 | 189 |
+| Held-out test split | 23 | 78 |
 
 One study, RADIANT (NCT05923827), passed screening but was confirmed during label review to be a **Type 1 diabetes** study. Its sampled records were removed (§2.4), and the split script includes an explicit check that stops it from re-entering the dataset.
 
@@ -146,10 +146,7 @@ The proposal called for trends by Results First Posted **year**. Our rolling win
 
 Measurements from the same study share wording, interventions, and sponsor templates, so a random row split would leak information. We used `GroupShuffleSplit` grouped by **NCT ID** (seed 143). The script asserts that no study appears in both training and test, and that every class appears in both splits.
 
-We deliberately made the test split large, holding out 70% of studies (54 studies, 191 records) and training on 22 studies (76 records). This has two effects:
-
-- The held-out estimate is more stable than a 20% test set of about 53 records would be.
-- It stress-tests each model in the **low-data regime** this project will always face, because manual labeling is expensive.
+We held out 30% of studies for testing (23 studies, 78 records) and trained on the remaining 53 studies (189 records). Training labels are close to balanced (61 Baseline, 61 Efficacy, 67 Safety), as are test labels (31 Baseline, 25 Efficacy, 22 Safety). This keeps most of our limited labeled data for training. The trade-off is a smaller test set, so the confidence intervals in §5 are wide and the errors can cluster within a few studies.
 
 ### 4.2 Features
 
@@ -159,11 +156,11 @@ The three classical models use **TF-IDF** on `title + description`, with English
 
 | Model | Configuration | Why it suits this data |
 |---|---|---|
-| **Most-frequent class** (baseline) | Always predicts the majority training class (*Efficacy*) | The comparison required by the proposal. It shows what "no learning" scores. |
-| **Logistic Regression** | `TfidfVectorizer(stop_words="english")` → `LogisticRegression(max_iter=1000)` | The standard strong baseline for short-text classification. It handles high-dimensional sparse TF-IDF features well with L2 regularization, so it resists overfitting with only 76 training rows. Its coefficients are **interpretable**. In our trained model, the top Baseline words are *age, sex, male, female, race, ethnicity*. The top Efficacy words are *change, baseline, weight, self, care*: the word "baseline" points to Efficacy because of the phrase *"change from baseline."* The top Safety words are MedDRA organ-system terms such as *disorders, gastrointestinal, cardiac, infections, investigations*. It also outputs probabilities that can flag uncertain records for human review. This was the model named in our original plan. |
-| **Multinomial Naive Bayes** | `TfidfVectorizer(stop_words="english")` → `MultinomialNB()` | A generative model that estimates one word distribution per class. It needs very little data to fit, which makes it a natural fit for a 76-record training set. It trains in milliseconds and gives a second simple, transparent reference point. Its word-independence assumption is a reasonable approximation for short measurement titles. |
+| **Most-frequent class** (baseline) | Always predicts the majority training class (*Safety*) | The comparison required by the proposal. It shows what "no learning" scores. |
+| **Logistic Regression** | `TfidfVectorizer(stop_words="english")` → `LogisticRegression(max_iter=1000)` | The standard strong baseline for short-text classification. It handles high-dimensional sparse TF-IDF features well with L2 regularization, so it resists overfitting with only 189 training rows. Its coefficients are **interpretable**. In our trained model, the top Baseline words are *age, continuous, sex, ethnicity, female, male, race*. The top Efficacy words are *change, baseline, week, participants, glucose, medication, weight*: the word "baseline" points to Efficacy because of the phrase *"change from baseline."* The top Safety words are MedDRA organ-system terms such as *disorders, gastrointestinal, infestations, infections, cardiac, injury*. It also outputs probabilities that can flag uncertain records for human review. This was the model named in our original plan. |
+| **Multinomial Naive Bayes** | `TfidfVectorizer(stop_words="english")` → `MultinomialNB()` | A generative model that estimates one word distribution per class. It needs very little data to fit, which makes it a natural fit for a 189-record training set. It trains in milliseconds and gives a second simple, transparent reference point. Its word-independence assumption is a reasonable approximation for short measurement titles. |
 | **Linear SVM** | `TfidfVectorizer(ngram_range=(1,2), min_df=2)` → `LinearSVC(C=1.0)` | Maximum-margin classifiers are among the strongest classical methods for sparse text. **Bigrams** capture phrases that single words miss, such as *"change from baseline"*, *"adverse events"*, and *"serious adverse"*. The SVM tests whether adding phrase context to a linear model closes the gap with a deep model. |
-| **BioBERT** | `dmis-lab/biobert-base-cased-v1.1`, lr 2e-5, batch 8, weight decay 0.01, epoch count (1–6) selected on validation studies, 5 training seeds (CPU only); see §4.4 | A BERT model pre-trained on PubMed abstracts and PMC full-text articles, so it already **knows biomedical vocabulary**: drug names, lab tests (*aspartate aminotransferase*), MedDRA adverse-event terms, and clinical phrasing. Transfer learning lets it use that knowledge with only 76 labeled examples. Unlike bag-of-words models, it reads **word order and context**, which matters when the same term can be baseline, efficacy, or safety. With so few training rows, CPU-only fine-tuning was practical. |
+| **BioBERT** | `dmis-lab/biobert-base-cased-v1.1`, lr 2e-5, batch 8, weight decay 0.01, epoch count (1–6) selected on validation studies, 5 training seeds (CPU only); see §4.4 | A BERT model pre-trained on PubMed abstracts and PMC full-text articles, so it already **knows biomedical vocabulary**: drug names, lab tests (*aspartate aminotransferase*), MedDRA adverse-event terms, and clinical phrasing. Transfer learning lets it use that knowledge with only 189 labeled examples. Unlike bag-of-words models, it reads **word order and context**, which matters when the same term can be baseline, efficacy, or safety. With so few training rows, CPU-only fine-tuning was practical. |
 
 Every trained model is saved: the classical models to `data/processed/models/*.joblib`, and BioBERT to `data/processed/biobert_results/best_model`.
 
@@ -171,9 +168,9 @@ Every trained model is saved: the classical models to `data/processed/models/*.j
 
 An earlier version of the BioBERT script passed the test set as its evaluation set, so `load_best_model_at_end` chose the checkpoint by test loss. That version was also run with only one seed. To get a fair comparison with Logistic Regression, `13.1_train_BioBert.py` now works like this:
 
-1. **Validation split from training studies only.** We hold out 25% of the 22 training studies (6 studies, 25 records: 7 Baseline, 7 Efficacy, 11 Safety), grouped by NCT ID. That leaves 16 studies and 51 records for fitting. The test set plays no part in any choice.
-2. **Stage 1, choosing the epoch count.** The model trains on the 51 fit records for up to 6 epochs and is scored on the validation studies after each one. The epoch count with the best validation macro-F1 is kept, with ties broken by lower validation loss.
-3. **Stage 2, retraining.** The model restarts from the pre-trained BioBERT weights and trains on **all 76 training records** for the chosen number of epochs. BioBERT therefore sees exactly the same training data as the TF-IDF models.
+1. **Validation split from training studies only.** We hold out 30% of the 53 training studies (16 studies, 60 records: 20 Baseline, 20 Efficacy, 20 Safety), grouped by NCT ID. That leaves 37 studies and 129 records for fitting. The test set plays no part in any choice.
+2. **Stage 1, choosing the epoch count.** The model trains on the 129 fit records for up to 6 epochs and is scored on the validation studies after each one. The epoch count with the best validation macro-F1 is kept, with ties broken by lower validation loss.
+3. **Stage 2, retraining.** The model restarts from the pre-trained BioBERT weights and trains on **all 189 training records** for the chosen number of epochs. BioBERT therefore sees exactly the same training data as the TF-IDF models.
 4. **One test prediction per seed.** The test set is scored once per seed, after every choice has been made.
 5. **Five seeds** (143, 1, 2, 3, 4). Each seed changes the classifier-head initialization, the dropout, and the batch order.
 
@@ -192,60 +189,65 @@ Following the proposal and the course evaluation guide, we report **macro-F1 (pr
 
 ## 5. Results
 
-### 5.1 Overall performance (held-out test set: 191 records, 54 studies)
+### 5.1 Overall performance (held-out test set: 78 records, 23 studies)
 
 | Model | Accuracy | **Macro-F1** | 95% CI (macro-F1) | Weighted-F1 | Micro-F1 | Error rate | Errors |
 |---|---:|---:|:---:|---:|---:|---:|---:|
-| Most-frequent class | 0.309 | 0.157 | 0.118 – 0.196 | 0.146 | 0.309 | 0.691 | 132 |
-| Logistic Regression | 0.864 | 0.865 | 0.786 – 0.937 | 0.866 | 0.864 | 0.136 | 26 |
-| Naive Bayes | 0.859 | 0.859 | 0.782 – 0.928 | 0.861 | 0.859 | 0.141 | 27 |
-| Linear SVM | 0.859 | 0.860 | 0.794 – 0.926 | 0.859 | 0.859 | 0.141 | 27 |
-| **BioBERT** (canonical seed 143) | **0.880** | **0.879** | 0.811 – 0.928 | **0.880** | **0.880** | **0.120** | **23** |
-| *BioBERT, mean of 5 seeds* | *0.906 ± 0.023* | *0.905 ± 0.024* | — | *0.906* | *0.906* | *0.094* | *18.0* |
+| Most-frequent class | 0.282 | 0.147 | 0.033 – 0.207 | 0.124 | 0.282 | 0.718 | 56 |
+| Logistic Regression | 0.872 | 0.879 | 0.743 – 0.971 | 0.871 | 0.872 | 0.128 | 10 |
+| Naive Bayes | 0.872 | 0.879 | 0.743 – 0.971 | 0.871 | 0.872 | 0.128 | 10 |
+| Linear SVM | 0.885 | 0.890 | 0.753 – 0.976 | 0.885 | 0.885 | 0.115 | 9 |
+| **BioBERT** (canonical seed 143) | **0.923** | **0.928** | 0.830 – 1.000 | **0.923** | **0.923** | **0.077** | **6** |
+| *BioBERT, mean of 5 seeds* | *0.928 ± 0.015* | *0.932 ± 0.015* | — | *0.928* | *0.928* | *0.072* | *5.6* |
 
 ![Macro-F1 vs. most-frequent-class baseline](../clinicaltrials-ml/results/macro_f1_vs_baseline.png)
 
-Every learned model improves macro-F1 by about **0.70** over the majority-class baseline. The pre-specified BioBERT model (seed 143) is the best single model at 0.879. Averaged over five training seeds BioBERT reaches **0.905**, which means about 18 errors against 26 for Logistic Regression. Seed 143 happens to be the **weakest** of the five seeds (§5.4).
+Every learned model improves macro-F1 by more than **0.73** over the majority-class baseline. The pre-specified BioBERT model (seed 143) is the best single model at 0.928, with 6 errors against 9–10 for the TF-IDF models. Averaged over five training seeds BioBERT reaches **0.932**, about 5.6 errors against 10 for Logistic Regression. Seed 143 falls in the middle of the five seeds (§5.4).
+
+Naive Bayes and Logistic Regression made **exactly the same prediction on all 78 test records**, so their rows are identical. They are separate models trained separately, but on this test set they agree record for record.
+
+The confidence intervals are wide (for example, 0.743–0.971 for Logistic Regression) because the test set holds only 23 studies, and several errors come from the same study. The intervals for all four models overlap.
 
 #### Cross-validation on the training set (TF-IDF models)
 
-As a second check that does not use the test set, `15_compare_models.py` runs **5-fold grouped cross-validation** (`StratifiedGroupKFold`, grouped by NCT ID) on the 76 training records. Each fold trains on about 61 records and is scored on the remaining 4–5 studies. BioBERT is not included, because each BioBERT fit takes minutes on CPU (see §4.4 for its own validation design).
+As a second check that does not use the test set, `15_compare_models.py` runs **5-fold grouped cross-validation** (`StratifiedGroupKFold`, grouped by NCT ID) on the 189 training records. Each fold trains on about 151 records and is scored on the remaining 10–11 studies. BioBERT is not included, because each BioBERT fit takes minutes on CPU (see §4.4 for its own validation design).
 
 | Model | Accuracy (mean ± SD) | **Macro-F1** (mean ± SD) | Weighted-F1 | Micro-F1 | Error rate |
 |---|---:|---:|---:|---:|---:|
-| Logistic Regression | 0.792 ± 0.120 | **0.755 ± 0.174** | 0.785 | 0.792 | 0.208 |
-| Naive Bayes | 0.765 ± 0.132 | 0.720 ± 0.187 | 0.747 | 0.765 | 0.235 |
-| Linear SVM | 0.727 ± 0.025 | 0.670 ± 0.075 | 0.709 | 0.727 | 0.273 |
+| Logistic Regression | 0.841 ± 0.096 | 0.827 ± 0.112 | 0.838 | 0.841 | 0.159 |
+| Naive Bayes | 0.842 ± 0.095 | **0.828 ± 0.112** | 0.839 | 0.842 | 0.158 |
+| Linear SVM | 0.837 ± 0.069 | 0.826 ± 0.079 | 0.837 | 0.837 | 0.163 |
 
 ![Cross-validation model comparison](../clinicaltrials-ml/results/model_comparison.png)
 
-Cross-validation gives the **same ranking** of the classical models as the held-out test set, with Logistic Regression first, then Naive Bayes, then Linear SVM. The scores are lower and much more variable (macro-F1 SD up to 0.19) because each fold trains on fewer records and is scored on only 4–5 studies. Cross-validation therefore confirms the ranking, and the larger 54-study test set gives the more precise performance estimate.
+In cross-validation the three classical models are **essentially tied**, within 0.002 macro-F1 of each other. On the held-out test set Linear SVM is slightly ahead (0.890 against 0.879), a difference of one record. Both evaluations agree that no classical model is clearly better than the others. The Linear SVM varies least from fold to fold (macro-F1 SD 0.079 against 0.112).
 
-The Linear SVM's weaker cross-validation result is largely explained by its `min_df = 2` setting. With about 61 training records per fold, `min_df = 2` keeps only about 266 of roughly 957 terms, a 72% cut. In a training-set-only check, dropping that filter (`min_df = 1`) raised the SVM's CV macro-F1 from 0.670 to 0.734. That is still below Logistic Regression's 0.755, so the ranking does not change. We kept the original SVM settings rather than re-tuning after test results were available. All of these differences fall within one fold standard deviation.
+The Linear SVM uses `min_df = 2`. With about 151 training records per fold, that setting keeps only about 540 of roughly 1,980 unigram and bigram terms, a cut of about 73%. In a training-set-only check, dropping the filter (`min_df = 1`) raised the SVM's CV macro-F1 only slightly, from 0.826 to 0.837. We kept the original SVM settings rather than re-tuning after test results were available.
 
 ### 5.2 Per-class performance
 
 | Model | Baseline P / R / F1 | Efficacy P / R / F1 | Safety P / R / F1 |
 |---|---|---|---|
-| Logistic Regression | **0.96** / 0.74 / 0.84 | 0.71 / **0.97** / 0.82 | **0.98** / 0.89 / **0.94** |
-| Naive Bayes | 0.91 / 0.79 / 0.85 | 0.73 / 0.90 / 0.80 | 0.97 / 0.89 / 0.93 |
-| Linear SVM | 0.77 / **0.88** / 0.82 | **0.86** / 0.93 / **0.89** | 0.98 / 0.77 / 0.86 |
-| **BioBERT** (seed 143) | 0.93 / 0.83 / **0.88** | 0.79 / 0.88 / 0.83 | 0.92 / **0.92** / 0.92 |
-| *BioBERT F1, 5-seed mean (range)* | *0.89 (0.86–0.92)* | *0.89 (0.83–0.93)* | *0.93 (0.91–0.96)* |
+| Logistic Regression | **1.00** / 0.71 / 0.83 | 0.73 / 0.96 / 0.83 | 0.96 / **1.00** / **0.98** |
+| Naive Bayes | **1.00** / 0.71 / 0.83 | 0.73 / 0.96 / 0.83 | 0.96 / **1.00** / **0.98** |
+| Linear SVM | 0.96 / 0.77 / 0.86 | 0.77 / 0.96 / 0.86 | 0.95 / 0.95 / 0.95 |
+| **BioBERT** (seed 143) | 0.96 / **0.84** / **0.90** | **0.83** / **1.00** / **0.91** | **1.00** / 0.95 / **0.98** |
+| *BioBERT F1, 5-seed mean (range)* | *0.90 (0.88–0.93)* | *0.92 (0.91–0.93)* | *0.97 (0.95–1.00)* |
 
 ![Per-class F1 by model](../clinicaltrials-ml/results/per_class_f1_by_model.png)
 
-- **BioBERT** has the most **balanced** profile, with no class below 0.83 F1. Averaged over seeds it is best or tied-best on Baseline and Efficacy and level with Logistic Regression on Safety. Seed 143 has the best Baseline F1 and the best Safety recall (0.92). It gives up some Efficacy precision because it labels 5 efficacy outcomes as Safety (§5.5).
-- **Logistic Regression and Naive Bayes** over-predict *Efficacy*. They predicted 80 and 73 Efficacy labels when only 59 are true. Many bare baseline titles get pulled into Efficacy, which gives Efficacy a precision of only 0.71–0.73.
-- **Linear SVM** fixes much of that, with Baseline recall of 0.88 and the best Efficacy precision. But it loses **Safety recall (0.77)**: it labeled 14 adverse-event terms as Baseline. Many MedDRA terms appear only once, so `min_df = 2` drops them from the bigram vocabulary, leaving the SVM with little evidence for rare adverse-event wording.
+- **BioBERT** has the best or tied-best F1 in every class, with no class below 0.90 for seed 143 (5-seed means of 0.90 / 0.92 / 0.97). It found every Efficacy record (recall 1.00) and labeled nothing as Safety that was not Safety (precision 1.00).
+- **Logistic Regression and Naive Bayes** over-predict *Efficacy*. They predicted 33 Efficacy labels when only 25 are true. Nine Baseline records were pulled into Efficacy, which drops Baseline recall to 0.71 and Efficacy precision to 0.73. Both are perfect on Safety recall.
+- **Linear SVM** pulls fewer Baseline records into Efficacy (7 instead of 9), raising Baseline recall to 0.77. It also keeps Safety recall high (0.95): only 1 Safety record (*"Aspartate aminotransferase increased"*) was labeled Baseline.
+- **Every model's weakest point is Baseline recall.** Short baseline titles and questionnaire scores look like efficacy endpoints, which is the core ambiguity of this task (§5.5).
 
 ### 5.3 Confusion matrices (rows = true label, columns = predicted)
 
 | True ↓ / Pred → | LR: B / E / S | NB: B / E / S | SVM: B / E / S | **BioBERT (seed 143): B / E / S** |
 |---|:---:|:---:|:---:|:---:|
-| Baseline (66) | 49 / 17 / 0 | 52 / 14 / 0 | 58 / 8 / 0 | **55 / 11 / 0** |
-| Efficacy (59) | 1 / 57 / 1 | 4 / 53 / 2 | 3 / 55 / 1 | **2 / 52 / 5** |
-| Safety (66) | 1 / 6 / 59 | 1 / 6 / 59 | 14 / 1 / 51 | **2 / 3 / 61** |
+| Baseline (31) | 22 / 9 / 0 | 22 / 9 / 0 | 24 / 7 / 0 | **26 / 5 / 0** |
+| Efficacy (25) | 0 / 24 / 1 | 0 / 24 / 1 | 0 / 24 / 1 | **0 / 25 / 0** |
+| Safety (22) | 0 / 0 / 22 | 0 / 0 / 22 | 1 / 0 / 21 | **1 / 0 / 21** |
 
 | BioBERT (seed 143) | Logistic Regression |
 |---|---|
@@ -253,7 +255,7 @@ The Linear SVM's weaker cross-validation result is largely explained by its `min
 | **Linear SVM** | **Naive Bayes** |
 | ![Linear SVM confusion matrix](../clinicaltrials-ml/results/confusion_matrix_linear_svm.png) | ![Naive Bayes confusion matrix](../clinicaltrials-ml/results/confusion_matrix_naive_bayes.png) |
 
-`results/labeling_frequencies_by_model.png` compares each model's predicted label counts with the true test distribution. BioBERT's predicted counts (59 / 66 / 66) are closest to the true counts (66 / 59 / 66). Logistic Regression is at 51 / 80 / 60, Naive Bayes at 57 / 73 / 61, and Linear SVM at 75 / 64 / 52.
+`results/labeling_frequencies_by_model.png` compares each model's predicted label counts with the true test distribution. BioBERT's predicted counts (27 / 30 / 21) are closest to the true counts (31 / 25 / 22). Linear SVM is next at 25 / 31 / 22, and Logistic Regression and Naive Bayes are both at 22 / 33 / 23.
 
 ### 5.4 Is BioBERT truly better than Logistic Regression?
 
@@ -261,12 +263,12 @@ With selection moved to validation studies and five training seeds, we compared 
 
 | Seed | Epochs chosen (validation) | Validation macro-F1 | Test macro-F1 | Difference vs. LR | 95% CI of difference (study bootstrap) | BioBERT-only correct | LR-only correct | McNemar *p* |
 |---:|---:|---:|---:|---:|:---:|---:|---:|---:|
-| 1 | 6 | 0.806 | **0.937** | +0.072 | +0.004 to +0.141 | 18 | 4 | **0.004** |
-| 2 | 5 | 0.842 | 0.921 | +0.056 | −0.000 to +0.112 | 15 | 4 | **0.019** |
-| 3 | 6 | 0.813 | 0.901 | +0.036 | −0.029 to +0.105 | 18 | 11 | 0.265 |
-| 4 | 2 | 0.877 | 0.889 | +0.024 | −0.038 to +0.073 | 11 | 6 | 0.332 |
-| **143** (canonical) | 3 | 0.838 | 0.879 | +0.014 | −0.054 to +0.069 | 13 | 10 | 0.678 |
-| **Mean ± SD** | | | **0.905 ± 0.024** | **+0.040** | **−0.016 to +0.093** (seed-averaged) | | | |
+| 1 | 3 | 0.883 | 0.926 | +0.047 | −0.011 to +0.116 | 5 | 1 | 0.219 |
+| 2 | 6 | 0.883 | 0.939 | +0.061 | **+0.001 to +0.146** | 6 | 1 | 0.125 |
+| 3 | 4 | 0.867 | **0.952** | +0.074 | **+0.024 to +0.148** | 6 | 0 | **0.031** |
+| 4 | 1 | 0.886 | 0.913 | +0.035 | −0.025 to +0.089 | 4 | 1 | 0.375 |
+| **143** (canonical) | 4 | 0.851 | 0.928 | +0.049 | −0.001 to +0.128 | 5 | 1 | 0.219 |
+| **Mean ± SD** | | | **0.932 ± 0.015** | **+0.053** | **+0.004 to +0.117** (seed-averaged) | | | |
 
 ![BioBERT across seeds vs. Logistic Regression](../clinicaltrials-ml/results/biobert_vs_lr_seeds.png)
 
@@ -274,30 +276,30 @@ With selection moved to validation studies and five training seeds, we compared 
 
 **What this shows**
 
-1. **BioBERT scores higher than Logistic Regression on all 5 seeds,** by +0.014 to +0.072 macro-F1 (mean +0.040, about 8 fewer errors out of 191). The direction is consistent.
-2. **The size of the advantage is uncertain.** The seed-averaged 95% interval for the difference (−0.016 to +0.093) includes zero. Only 2 of 5 seeds reach McNemar p < 0.05, and only 1 of 5 has a per-seed interval that excludes zero.
-3. **Training randomness is as large as the gap.** BioBERT's test macro-F1 ranges from 0.879 to 0.937 depending only on the seed (SD 0.024). That spread is as large as the average advantage over LR. The earlier single-seed result of 0.906 sat in the middle of this range, so it was neither a lucky nor an unlucky run. A single run, however, could not have shown this.
-4. **The validation set is too small to tune on.** With 25 records, validation macro-F1 was *negatively* correlated with test macro-F1 across seeds (r = −0.56). Seed 4 had the best validation score (0.877) but the second-worst test score. The chosen epoch count (2–6) therefore reflects validation noise more than true quality. This is the cost of a 76-record training set.
+1. **BioBERT scores higher than Logistic Regression on all 5 seeds,** by +0.035 to +0.074 macro-F1 (mean +0.053, about 4 fewer errors out of 78). Even the weakest seed (0.913) beats every TF-IDF model.
+2. **The advantage is statistically supported, but only just.** The seed-averaged 95% interval for the difference (+0.004 to +0.117) excludes zero, and so do the per-seed intervals for seeds 2 and 3. The lower end of the seed-averaged interval is very close to zero, though, and the per-seed interval for the canonical seed 143 (−0.001 to +0.128) just barely includes it.
+3. **McNemar's test has little power here.** Only seed 3 reaches p < 0.05. BioBERT and Logistic Regression disagree on just 4–7 of the 78 records, and with so few disagreements McNemar's test cannot reach significance unless nearly all of them go one way. In every seed BioBERT won at least 4 times as many disagreements as it lost (for example, 5 vs. 1 for seed 143).
+4. **Training randomness is smaller than the gap.** BioBERT's test macro-F1 ranges from 0.913 to 0.952 depending only on the seed (SD 0.015). That spread is smaller than its average advantage over Logistic Regression.
+5. **The validation set is still a poor guide for tuning.** With 60 validation records, validation macro-F1 was *negatively* correlated with test macro-F1 across seeds (r = −0.29). Seed 4 had the best validation score (0.886) but the worst test score (0.913), and it stopped after only 1 epoch. The chosen epoch count (1–6) therefore reflects validation noise more than true quality.
 
-Against Naive Bayes and Linear SVM, the canonical seed-143 model also wins more disagreements than it loses (14 vs. 10 and 13 vs. 9), but neither difference is significant (McNemar p = 0.54 and 0.52).
+Against Naive Bayes and Linear SVM, the canonical seed-143 model also wins more disagreements than it loses (5 vs. 1 and 4 vs. 1), but neither difference is significant (McNemar p = 0.22 and 0.38).
 
-**Answer:** on this data, BioBERT is **probably** better than Logistic Regression. It wins on every seed, by an average of 0.04 macro-F1. However, we **cannot** call it *reliably* better: the study-level uncertainty from a 54-study test set, together with seed-to-seed variance, is large enough that a true difference of zero cannot be ruled out.
+**Answer:** on this data, BioBERT is **better** than Logistic Regression. It wins on every seed, by an average of 0.053 macro-F1, and the seed-averaged study-level interval excludes zero. However, the lower end of that interval is close to zero and only 1 of 5 McNemar tests is significant, so the true size of the advantage could be quite small. A larger test set would be needed to pin it down.
 
-### 5.5 Error analysis (canonical BioBERT, 23 errors)
+### 5.5 Error analysis (canonical BioBERT, 6 errors)
 
 | Pattern | Count | Examples |
 |---|---:|---|
-| Baseline measure read as Efficacy | 11 | *"Systolic blood pressure"*, *"triglyceride"*, *"HOMA-IR"*, *"Depressive Symptoms Score (PHQ-9)"*, *"Diabetes Self-efficacy Score"*, *"Food Insecurity Score (HFSSM)"* |
-| Efficacy read as Safety | 5 | *"Major Adverse Cardiovascular Event (MACE-3)"*, *"Change in Kidney Function (Creatinine Clearance)"*, *"Time to Treatment Intensification"*, *"ADA Adherence Measures: Flu Vaccination"* |
-| Safety read as Efficacy | 3 | *"Aspartate aminotransferase increased"*, *"Number of Clinically Significant Hypoglycaemic Episodes (Level 2)"*, *"Presence of Orthostatic Hypotension"* |
-| Safety read as Baseline | 2 | *"Heart rate increased — Investigations"*, *"Rates of NICU Admission"* |
-| Efficacy read as Baseline | 2 | *"Number of Participants With an eGFR Decline > 30%"*, *"Clinical Significant Hypoglycemia"* |
+| Baseline measure read as Efficacy | 5 | *"Depressive Symptoms Score (PHQ-9)"*, *"Health-related Quality of Life Score (SF-12)"*, *"Food Insecurity Score (HFSSM)"*, *"Diabetes Self-efficacy Score"*, *"Diabetes Self-Efficacy Baseline"* |
+| Safety read as Baseline | 1 | *"Heart rate increased — Investigations"* |
 
 Most errors are **inherently ambiguous from the text alone**.
 
-- *"Systolic blood pressure"* or a quality-of-life score is a Baseline measure in the baseline table, but the identical phrase is an Efficacy endpoint in the outcome table.
-- MACE and kidney-function decline are efficacy endpoints in cardiovascular and renal outcome trials, but read like harms.
-- One test record titled *"Clinical Significant Hypoglycemia"* is labeled **Efficacy**, while a near-identical hypoglycaemia outcome in another study is labeled **Safety**. Inconsistencies like this put a ceiling on any model's score.
+- Four of the six errors come from **one behavioral study** (NCT04959487), whose baseline table reports questionnaire scores for depression, quality of life, food insecurity, and self-efficacy. In behavioral trials, these same scores are usually efficacy endpoints, so without the source section or the timing of the measurement the text looks like an outcome.
+- *"Diabetes Self-Efficacy Baseline"* was read as Efficacy even though it contains the word "baseline." The word "self-efficacy" likely pulled it toward Efficacy.
+- *"Heart rate increased"* is an adverse event, but heart rate is also a common baseline vital sign.
+
+The five Baseline → Efficacy records were **missed by all four models**. The TF-IDF models also missed short baseline titles that BioBERT got right. All three missed *"Hemoglobin A1c"* and *"Participants With Any Hospital Admissions (prior 6 months)"*, and Logistic Regression and Naive Bayes also missed *"BMI"* and *"Body Mass Index (BMI)"*. All three TF-IDF models labeled one efficacy outcome, *"Renal Oxidative Metabolism"* (a PET imaging measure), as Safety.
 
 These are exactly the overlaps the proposal anticipated. Section 7 suggests a direct fix.
 
@@ -305,29 +307,29 @@ These are exactly the overlaps the proposal anticipated. Section 7 suggests a di
 
 ## 6. Conclusion: Which Model Is Best and Why
 
-**BioBERT is the best-performing model, but its margin over Logistic Regression is not statistically established.**
+**BioBERT is the best-performing model, and its margin over Logistic Regression is statistically supported, though the size of that margin is uncertain.**
 
 **Why BioBERT ranks first**
 
-1. **Highest primary metric.** The pre-specified BioBERT model has the best macro-F1 of any single model (0.879). Averaged over five seeds BioBERT reaches 0.905, against 0.859–0.865 for the three TF-IDF models.
-2. **Consistent across training runs.** BioBERT beat Logistic Regression on 5 of 5 seeds, and its worst seed still beat every linear model.
-3. **Most balanced.** It has no weak class (5-seed mean F1 of 0.89 / 0.89 / 0.93), and its predicted label distribution is closest to the truth. Each linear model has one clear weakness: LR and NB over-predict Efficacy, and the SVM misses adverse events.
-4. **The advantage has a clear cause.** Biomedical pre-training gives BioBERT prior knowledge of lab tests, adverse-event terms, and clinical phrasing that 76 training examples cannot teach a bag-of-words model. Its remaining errors are mostly on text that is genuinely ambiguous without the source section.
+1. **Highest primary metric.** The pre-specified BioBERT model has the best macro-F1 of any single model (0.928). Averaged over five seeds BioBERT reaches 0.932, against 0.879–0.890 for the three TF-IDF models.
+2. **Consistent across training runs.** BioBERT beat Logistic Regression on 5 of 5 seeds, and its worst seed (0.913) still beat every linear model. Seed-to-seed spread (SD 0.015) is smaller than its lead.
+3. **Most balanced.** It has the best or tied-best F1 in every class (5-seed mean F1 of 0.90 / 0.92 / 0.97), and its predicted label distribution is closest to the truth. The linear models all share the same weakness: they pull too many Baseline records into Efficacy.
+4. **The advantage has a clear cause.** Biomedical pre-training gives BioBERT prior knowledge of lab tests, adverse-event terms, and clinical phrasing that 189 training examples cannot teach a bag-of-words model. That is why it gets bare baseline titles such as *"Hemoglobin A1c"* and *"BMI"* right when the TF-IDF models do not. Its remaining errors are mostly on text that is genuinely ambiguous without the source section.
 
-**Why the margin is not certain.** With leakage removed, BioBERT's lead over Logistic Regression is +0.040 macro-F1 on average. The 95% interval (−0.016 to +0.093) includes zero, seed-to-seed spread (0.879–0.937) is as large as the gap, and McNemar's test is significant for only 2 of 5 seeds. BioBERT is also much heavier: about 110 million parameters, several minutes of CPU training per run, and a 400 MB model file.
+**Why the margin is uncertain.** BioBERT's lead over Logistic Regression is +0.053 macro-F1 on average, about 4 fewer errors on 78 records. The seed-averaged 95% interval (+0.004 to +0.117) excludes zero, but only barely, and McNemar's test is significant for only 1 of 5 seeds. With a 23-study test set where several errors come from the same study, the true advantage could be anywhere from very small to about 0.12. BioBERT is also much heavier: about 110 million parameters, several minutes of CPU training per run, and a 400 MB model file.
 
 **Practical recommendation**
 
-- **Use BioBERT** when the goal is the best expected accuracy, for example when pre-labeling large batches of outcome measures for reviewers. Average several seeds, or use a larger validation set, to reduce run-to-run variance.
-- **Use TF-IDF + Logistic Regression** when speed, transparency, or explainability matter. It is the strongest classical model (macro-F1 0.865), trains in under a second, and its coefficients and probabilities make it easy to justify a label or flag uncertain records for review. Given the current evidence, choosing it costs at most a few points of macro-F1.
-- Naive Bayes and Linear SVM add no advantage over Logistic Regression here.
+- **Use BioBERT** when the goal is the best expected accuracy, for example when pre-labeling large batches of outcome measures for reviewers. Averaging several seeds, or using a larger validation set, would reduce run-to-run variance.
+- **Use TF-IDF + Logistic Regression** when speed, transparency, or explainability matter. It reaches a macro-F1 of 0.879, trains in under a second, and its coefficients and probabilities make it easy to justify a label or flag uncertain records for review. On the current evidence, choosing it costs about 0.05 macro-F1.
+- Naive Bayes and Linear SVM add no meaningful advantage over Logistic Regression here. Naive Bayes made the same predictions, and the Linear SVM's one-record edge on the test set did not hold up in cross-validation.
 
 ---
 
 ## 7. Limitations and Future Work
 
-- **Small labeled set.** We had 267 labeled records, with 76 used for training. That leaves only a 25-record validation set and a 54-study test set, which together explain why BioBERT's advantage cannot be confirmed statistically. Labeling more records is the most direct way to improve every model and settle the BioBERT-vs-LR question. Repeated grouped splits (for example, grouped cross-validation over all 267 records with several BioBERT seeds per fold) would also add evidence without new labeling.
-- **Noisy validation-based tuning.** The epoch count chosen on 25 validation records did not track test performance (r = −0.56). A larger validation set, grouped cross-validation inside the training studies, or a fixed epoch count chosen before training would make BioBERT's tuning more reliable.
+- **Small labeled set.** We had 267 labeled records, with 189 used for training. That leaves a 60-record validation set and a 78-record, 23-study test set. The test set is small enough that the confidence intervals are wide (for example, 0.830–1.000 for BioBERT), a single record moves macro-F1 by about 0.01, and four of BioBERT's six errors come from one study. That is why BioBERT's advantage over Logistic Regression is only barely significant. Labeling more records is the most direct way to improve every model and pin down the size of the BioBERT-vs-LR gap. Repeated grouped splits (for example, grouped cross-validation over all 267 records with several BioBERT seeds per fold) would also add evidence without new labeling.
+- **Noisy validation-based tuning.** The epoch count chosen on 60 validation records did not track test performance (r = −0.29), and the seed with the best validation score had the worst test score. A larger validation set, grouped cross-validation inside the training studies, or a fixed epoch count chosen before training would make BioBERT's tuning more reliable.
 - **Text-only input.** The most common errors would likely disappear if the model also saw the **source section** (baseline table, outcome measure, or adverse-event table) as a feature, for example by prepending `[OUTCOME]` to the text. We excluded it to test the text alone, but it is available, legitimate information.
 - **One-year window.** The Results First Posted window covers a single year, which supports a month-level description but not trend claims. Repeating the pipeline over several years would make Goal 2's trend analysis meaningful.
 - **Labels partly follow the source section.** The quality-check rules label baseline-table records as Baseline and adverse-event records as Safety. Labels are therefore not fully independent of record structure, and the classifiers may learn a section's writing style instead of its clinical meaning. The workbook flags this as a training caution. The 8 outcome measures relabeled Safety and the 33 excluded unclear records are the cases where human judgment went beyond the section rule. A few similar outcomes, such as the hypoglycaemia measures, received different labels in different studies.
@@ -345,7 +347,7 @@ All code is in `clinicaltrials-ml/src/` and should be run in numeric order. Seed
 | Extract and clean | `06_extract_measures.py` – `09_prepare_text.py` |
 | Label | `10_prepare_labels.py`, `11_create_label_sample.py` → reviewed in `screening/Clinical_Trials_Model_Ready_T2D_Exclusions_Applied.xlsx` → `screening/model_ready_267.csv` |
 | Split | `12_prepare_train_test.py` |
-| Train | `13_train_logistic_regression.py`, `13.1_train_BioBert.py` (validation split + 5 seeds, about 40 minutes on CPU; pass seed numbers as arguments to run a subset), `13.2_train_linear_svm.py`, `14_analyze_predictions.py` (Naive Bayes + error files) |
+| Train | `13_train_logistic_regression.py`, `13.1_train_BioBert.py` (validation split + 5 seeds, about 35 minutes on CPU; pass seed numbers as arguments to run a subset), `13.2_train_linear_svm.py`, `14_analyze_predictions.py` (Naive Bayes + error files) |
 | Evaluate and visualize | `15_compare_models.py` (cross-validation → `model_comparison.csv`; held-out test → `model_test_results.csv`), `16_visualize_results.py`, `17_report_figures.py` (baseline, bootstrap CIs, per-class F1, monthly category figure), `18_compare_biobert_lr.py` (seed-level BioBERT vs. LR tests) |
 
 Key outputs: `data/processed/model_comparison.csv` (5-fold grouped CV), `data/processed/model_test_results.csv` (held-out test), `data/processed/biobert_seed_results.csv`, `data/processed/biobert_seeds/`, `data/processed/biobert_training_log.txt`, `data/processed/*_classification_report.txt`, `data/processed/*_mistakes.csv`, `results/report_summary_metrics.csv`, `results/biobert_vs_lr.csv`, `results/*.png`.
