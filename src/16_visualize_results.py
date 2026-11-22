@@ -33,7 +33,8 @@ plt.title("Machine Learning Model Comparison (5-Fold Grouped Cross-Validation)")
 plt.ylabel("Cross-Validation Score")
 plt.xlabel("")
 plt.ylim(0, 1)
-plt.legend(["Accuracy", "Macro F1", "Weighted F1", "Micro F1"])
+plt.legend(["Accuracy", "Macro F1", "Weighted F1", "Micro F1"], ncol=2,
+    frameon=False)
 plt.tight_layout()
 
 plt.savefig(RESULTS_DIR / "model_comparison.png", dpi=300)

@@ -122,7 +122,7 @@ for side in ("top", "right"):
     ax.spines[side].set_visible(False)
 ax.grid(axis="y", color=GRID)
 ax.set_axisbelow(True)
-ax.legend(frameon=False, fontsize=8, loc="lower right")
+ax.legend(frameon=False, fontsize=8, loc="upper right",bbox_to_anchor=(0.95, 1.0))
 fig.tight_layout()
 fig.savefig(RESULTS_DIR / "biobert_vs_lr_seeds.png", dpi=200)
 print("\nSaved results/biobert_vs_lr.csv and results/biobert_vs_lr_seeds.png")
