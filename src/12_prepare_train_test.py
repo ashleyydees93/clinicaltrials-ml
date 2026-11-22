@@ -1,4 +1,3 @@
-"""Prepare a leakage-safe train/test split for the DSC521 measurements project."""
 from pathlib import Path
 import pandas as pd
 from sklearn.model_selection import GroupShuffleSplit
@@ -22,7 +21,7 @@ if "NCT05923827" in set(df["nct_id"]):
     raise ValueError("Type 1 diabetes RADIANT study was unexpectedly included.")
 
 # Hold out entire studies so the model never sees a test-study during training.
-split = GroupShuffleSplit(n_splits=1, test_size=0.20, random_state=SEED)
+split = GroupShuffleSplit(n_splits=1, test_size=0.70, random_state=SEED)
 train_idx, test_idx = next(split.split(df, df["label"], groups=df["nct_id"]))
 train = df.iloc[train_idx].copy()
 test = df.iloc[test_idx].copy()

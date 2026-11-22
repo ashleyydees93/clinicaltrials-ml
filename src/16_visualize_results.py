@@ -1,4 +1,3 @@
-
 import os
 from pathlib import Path
 import pandas as pd
@@ -16,8 +15,11 @@ os.makedirs(RESULTS_DIR, exist_ok=True)
 # Graph 1: Compare our machine learning models
 # ----------------------------------------
 
-# Load cross-validation results
+# Load 5-fold grouped cross-validation results (training set, TF-IDF models)
 comparison = pd.read_csv(PROCESSED_DIR / "model_comparison.csv")
+
+# Load held-out test results (all models, including BioBERT)
+test_results = pd.read_csv(PROCESSED_DIR / "model_test_results.csv")
 
 # Plot accuracy and Macro F1 side by side
 comparison.plot(
@@ -28,7 +30,7 @@ comparison.plot(
     rot=0
 )
 
-plt.title("Machine Learning Model Comparison")
+plt.title("Machine Learning Model Comparison (5-Fold Grouped Cross-Validation)")
 plt.ylabel("Cross-Validation Score")
 plt.xlabel("")
 plt.ylim(0, 1)
@@ -42,10 +44,10 @@ plt.show()
 # Graph 1b: Error rate by model
 # ----------------------------------------
 
-if "Error Rate" not in comparison.columns:
-    comparison["Error Rate"] = 1 - comparison["Accuracy"]
+if "Error Rate" not in test_results.columns:
+    test_results["Error Rate"] = 1 - test_results["Accuracy"]
 
-comparison.plot(
+test_results.plot(
     x="Model",
     y="Error Rate",
     kind="bar",
@@ -55,12 +57,12 @@ comparison.plot(
     color="tomato"
 )
 
-plt.title("Error Rate by Model")
+plt.title("Error Rate by Model (Held-out Test Set)")
 plt.ylabel("Error Rate")
 plt.xlabel("")
 plt.ylim(0, 1)
 
-for index, value in enumerate(comparison["Error Rate"]):
+for index, value in enumerate(test_results["Error Rate"]):
     plt.text(
         index,
         value + 0.015,

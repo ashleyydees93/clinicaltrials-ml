@@ -1,4 +1,3 @@
-
 import pandas as pd
 from pathlib import Path
 from sklearn.model_selection import StratifiedGroupKFold, cross_validate
@@ -10,14 +9,16 @@ from sklearn.svm import LinearSVC
 from sklearn.metrics import (
     accuracy_score,
     classification_report,
-    confusion_matrix,
     f1_score,
 )
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
 
-# Load the training dataset only
+# ----------------------------------------------------------------------
+# Part 1: 5-fold grouped cross-validation (training set only)
+# ----------------------------------------------------------------------
+
 train = pd.read_csv(PROCESSED_DIR / "train.csv")
 
 X = train["text"].fillna("")
@@ -44,9 +45,8 @@ cv = StratifiedGroupKFold(
     random_state=143
 )
 
-results = []
+cv_results = []
 
-# Train and evaluate each model
 for name, model in models.items():
 
     vectorizer_kwargs = {"stop_words": "english"}
@@ -75,14 +75,30 @@ for name, model in models.items():
         }
     )
 
-    results.append({
+    cv_results.append({
         "Model": name,
+        "Evaluation": "5-fold grouped CV (training set)",
         "Accuracy": scores["test_accuracy"].mean(),
+        "Accuracy SD": scores["test_accuracy"].std(ddof=1),
         "Macro F1": scores["test_f1_macro"].mean(),
+        "Macro F1 SD": scores["test_f1_macro"].std(ddof=1),
         "Weighted F1": scores["test_f1_weighted"].mean(),
+        "Weighted F1 SD": scores["test_f1_weighted"].std(ddof=1),
         "Micro F1": scores["test_f1_micro"].mean(),
-        "Error Rate": 1 - scores["test_accuracy"].mean()
+        "Micro F1 SD": scores["test_f1_micro"].std(ddof=1),
+        "Error Rate": 1 - scores["test_accuracy"].mean(),
     })
+
+cv_df = pd.DataFrame(cv_results)
+
+print("Model Comparison (5-Fold Grouped Cross-Validation, training set)")
+print(cv_df.drop(columns="Evaluation").round(4).to_string(index=False))
+
+cv_df.to_csv(PROCESSED_DIR / "model_comparison.csv", index=False)
+
+# ----------------------------------------------------------------------
+# Part 2: Held-out test set (saved predictions from each training script)
+# ----------------------------------------------------------------------
 
 try:
     import torch
@@ -96,45 +112,6 @@ held_out_outputs = [
     ("Linear SVM", "test_predictions_svm.csv", "linear_svm"),
     ("BioBERT", "test_predictions_biobert.csv", "biobert"),
 ]
-
-for model_name, filename, slug in held_out_outputs:
-    prediction_path = PROCESSED_DIR / filename
-    if not prediction_path.exists():
-        continue
-
-    predictions = pd.read_csv(prediction_path)
-    actual = predictions["label"]
-    predicted = predictions["predicted_label"]
-
-    label_report = classification_report(
-        actual,
-        predicted,
-        zero_division=0
-    )
-    report_path = PROCESSED_DIR / f"{slug}_classification_report.txt"
-    report_path.write_text(label_report, encoding="utf-8")
-
-    labels = sorted(actual.unique())
-    confusion_path = PROJECT_ROOT / "results" / f"confusion_matrix_{slug}.png"
-    confusion_exists = confusion_path.exists()
-
-    held_out_row = {
-        "Model": model_name,
-        "Accuracy": accuracy_score(actual, predicted),
-        "Macro F1": f1_score(actual, predicted, average="macro"),
-        "Weighted F1": f1_score(actual, predicted, average="weighted"),
-        "Micro F1": f1_score(actual, predicted, average="micro"),
-        "Error Rate": 1 - accuracy_score(actual, predicted),
-    }
-
-    existing = next(
-        (row for row in results if row["Model"] == model_name),
-        None
-    )
-    if existing is not None:
-        existing.update(held_out_row)
-    else:
-        results.append(held_out_row)
 
 model_artifacts = {
     "Logistic Regression": (
@@ -150,49 +127,58 @@ model_artifacts = {
         "Not applicable",
     ),
     "BioBERT": (
-        PROCESSED_DIR / "biobert_results",
-        "Enabled with load_best_model_at_end",
+        PROCESSED_DIR / "biobert_results" / "best_model",
+        "Epochs selected on validation studies (seed 143)",
     ),
 }
 
-for row in results:
-    model_name = row["Model"]
-    artifact, best_loading = model_artifacts.get(
-        model_name,
-        (None, "Not implemented"),
-    )
-    row["GPU Support"] = (
-        gpu_support if model_name == "BioBERT" else "Not applicable"
-    )
-    row["Model Saving"] = (
-        "Yes" if artifact is not None and artifact.exists() else "Not detected"
-    )
-    row["Best-Model Loading"] = best_loading
+test_results = []
 
-    report_path = PROCESSED_DIR / f"{model_name.lower().replace(' ', '_')}_classification_report.txt"
-    row["Label Prediction Report"] = (
-        str(report_path) if report_path.exists() else "Not generated"
-    )
+for model_name, filename, slug in held_out_outputs:
+    prediction_path = PROCESSED_DIR / filename
+    if not prediction_path.exists():
+        print(f"\nSkipping {model_name}: {filename} not found.")
+        continue
 
-    confusion_path = (
-        PROJECT_ROOT
-        / "results"
-        / f"confusion_matrix_{model_name.lower().replace(' ', '_')}.png"
-    )
-    row["Confusion Matrix"] = (
-        str(confusion_path) if confusion_path.exists() else "Not generated"
+    predictions = pd.read_csv(prediction_path)
+    actual = predictions["label"]
+    predicted = predictions["predicted_label"]
+
+    # Per-label precision/recall/F1 report
+    report_path = PROCESSED_DIR / f"{slug}_classification_report.txt"
+    report_path.write_text(
+        classification_report(actual, predicted, zero_division=0),
+        encoding="utf-8"
     )
 
-# Display comparison
-results_df = pd.DataFrame(results)
+    confusion_path = PROJECT_ROOT / "results" / f"confusion_matrix_{slug}.png"
+    artifact, best_loading = model_artifacts[model_name]
 
-print("\nModel Comparison (5-Fold Cross-Validation)")
-print(results_df.round(4).to_string(index=False))
+    test_results.append({
+        "Model": model_name,
+        "Evaluation": "Held-out test set",
+        "Accuracy": accuracy_score(actual, predicted),
+        "Macro F1": f1_score(actual, predicted, average="macro"),
+        "Weighted F1": f1_score(actual, predicted, average="weighted"),
+        "Micro F1": f1_score(actual, predicted, average="micro"),
+        "Error Rate": 1 - accuracy_score(actual, predicted),
+        "GPU Support": gpu_support if model_name == "BioBERT" else "Not applicable",
+        "Model Saving": "Yes" if artifact.exists() else "Not detected",
+        "Best-Model Loading": best_loading,
+        "Label Prediction Report": str(report_path),
+        "Confusion Matrix": (
+            str(confusion_path) if confusion_path.exists() else "Not generated"
+        ),
+    })
 
-# Save results
-results_df.to_csv(
-    PROCESSED_DIR / "model_comparison.csv",
-    index=False
-)
+test_df = pd.DataFrame(test_results)
 
-print("\nResults saved successfully!")
+print("\nModel Comparison (Held-out Test Set)")
+print(test_df[["Model", "Accuracy", "Macro F1", "Weighted F1", "Micro F1",
+               "Error Rate"]].round(4).to_string(index=False))
+
+test_df.to_csv(PROCESSED_DIR / "model_test_results.csv", index=False)
+
+print("\nSaved:")
+print(" ", PROCESSED_DIR / "model_comparison.csv", "(cross-validation)")
+print(" ", PROCESSED_DIR / "model_test_results.csv", "(held-out test)")

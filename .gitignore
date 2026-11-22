@@ -222,3 +222,13 @@ __marimo__/
 # Downloaded ClinicalTrials.gov data
 data/raw/
 data/processed/
+
+# Trained models and training checkpoints (large; regenerate with src/13*.py and 14_analyze_predictions.py)
+# Listed explicitly so they stay ignored even if the data/processed/ rule above is narrowed.
+data/processed/biobert_results/
+data/processed/models/
+checkpoint-*/
+*.safetensors
+*.bin
+*.pt
+*.joblib

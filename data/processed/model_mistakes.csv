@@ -1,11 +1,27 @@
 record_id,nct_id,text,label,reviewer,source,predicted_label
 5,NCT04959487,Depressive Symptoms Score (PHQ-9),Baseline,Ashley,baseline,Efficacy
+12,NCT06206525,Clinical Significant Hypoglycemia Participates developed blood glucose concentration lower than 54 mg/dL,Efficacy,Caroline,outcome,Safety
+26,NCT05227677,triglyceride,Baseline,Caroline,baseline,Efficacy
+35,NCT06206525,First blood glucose on presentation,Baseline,Ashley,baseline,Efficacy
+36,NCT04255433,"Injury Injury, poisoning and procedural complications",Safety,Caroline,adverse_event,Efficacy
+39,NCT04835493,Body Mass Index (BMI) Compare intervention versus control BMI levels,Efficacy,Ashley,outcome,Baseline
 43,NCT04959487,"Health-related Quality of Life Score (SF-12) The standardized 12-item short form health survey (SF-12v2) was used to measure the health-related quality of life. The SF-12v2 provides a summary score for physical and mental health; here the overall score is reported (range 0-100). The transformed T-score for the overall score has a mean=50 and SD=10, in which higher values means better health.",Baseline,Ashley,baseline,Efficacy
+46,NCT06109311,"Joint dislocation Injury, poisoning and procedural complications",Safety,Caroline,adverse_event,Efficacy
+57,NCT05227677,HOMA-β,Baseline,Ashley,baseline,Efficacy
+60,NCT04255433,Arrhythmia prophylaxis Surgical and medical procedures,Safety,Caroline,adverse_event,Baseline
+61,NCT02088658,Region of Enrollment,Baseline,Ashley,baseline,Efficacy
+65,NCT05370612,Rates of NICU Admission,Safety,Ashley,outcome,Efficacy
+68,NCT04255433,"Compression fracture Injury, poisoning and procedural complications",Safety,Caroline,adverse_event,Efficacy
+81,NCT04286555,"Presence of Orthostatic Hypotension Participants will lie in the supine position for 5 minutes and undergo three blood pressure measurements, separated by 30 seconds. The average of these three readings will be used as the supine blood pressure. Participants will stand with their arm rested on an adjacent Mayo table at 70-80 degrees from their torso, and participants will then undergo another set of triplicate blood pressure measurements, separated by 30 seconds each. The average of these three readings will be used as the standing blood pressure. Presence of orthostatic hypotension will be defined as ≥ 20 mmHg drop in systolic blood pressure or a ≥ 10 mmHg drop in diastolic blood pressure upon standing.",Safety,Ashley,outcome,Efficacy
 109,NCT04959487,Participants With Any Hospital Admissions (prior 6 months),Baseline,Ashley,baseline,Efficacy
 117,NCT02088658,Hemoglobin A1c,Baseline,Ashley,baseline,Efficacy
-128,NCT06156696,Body Mass Index (BMI),Baseline,Caroline,baseline,Efficacy
 141,NCT04959487,Food Insecurity Score (HFSSM) Food insecurity is measured using the 10-item adult version of the USDA Household Food Security Survey Module (HFSSM). The score ranges from 0 to 10 . Higher scores indicates higher severity of food insecurity.,Baseline,Ashley,baseline,Efficacy
+143,NCT04167761,Region of Enrollment,Baseline,Ashley,baseline,Efficacy
+177,NCT05227677,Systolic blood pressure,Baseline,Ashley,baseline,Efficacy
+200,NCT05227677,Serum uric acid,Baseline,Caroline,baseline,Efficacy
+214,NCT04255433,"Periprosthetic fracture Injury, poisoning and procedural complications",Safety,Caroline,adverse_event,Efficacy
 224,NCT04959487,"Diabetes Self-efficacy Score The 8-item Perceived Diabetes Self-Management (PDSM) scale, assesses confidence in one's ability to manage numerous self-care behaviors, including diet and glucose management. The PDSM scores ranges from 8 to 40, with higher scores indicating more confidence in self-management of diabetes.",Baseline,Caroline,baseline,Efficacy
-228,NCT05530356,"Renal Oxidative Metabolism Positron emission tomography (PET) with C-11 acetate is used to assess renal oxidative metabolism. Its outcome measure is the cortical clearance rate constant k2, expressed per minute (min\^-1). Following intravenous injection, C-11 acetate is taken up by renal tissue and converted to acetyl-CoA, which enters the tricarboxylic acid (TCA) cycle and is oxidized to C-11 CO2. The washout of C-11 activity from the tissue, modeled region by region in the renal cortex, reflects the rate of this oxidative process. The clearance rate constant k2, derived from kinetic modeling of the tissue time-activity curve, will be enhanced when oxidative metabolism and TCA cycle flux are increased. Hence, assuming tracer washout is in proportion to mitochondrial oxidation, high cortical k2 values indicate high renal oxidative metabolism, while low cortical k2 values indicate reduced renal oxidative metabolism.",Efficacy,Caroline,outcome,Safety
+251,NCT05587348,Region of Enrollment,Baseline,Ashley,baseline,Efficacy
 258,NCT05587348,"Diabetes Self-Efficacy Baseline The Diabetes Self-Efficacy Survey Short Form (DES-SF) is an 8-item questionnaire assessing the ability of a person to self-manage their diabetes. Participants indicate the degree to which they agree with each of the statements on a 5 point scale where 1 = strongly disagree and 5 = strongly agree. The scores are summed and divided by 8 to generate an average score that can range from 1 to 5, with 5 indicating increased self-efficacy.",Baseline,Caroline,outcome,Efficacy
-268,NCT03855449,BMI,Baseline,Caroline,baseline,Efficacy
+290,NCT03940209,"Social Needs Social needs count of 12 dichotomous variables: needs were considered met (=0) when they were very unlikely or unlikely to arise in the next month; all other responses identified unmet needs (=1). Items assessed the likelihood that personal \& neighborhood safety, housing, space in home, food, transportation, child care, social interaction, financial (utilities, necessities, unexpected expenses) and other (fill in need) would be met in the next month. Per eligibility, all participants were required to report at least one need at baseline. Higher values indicate greater social needs reported.",Baseline,Caroline,baseline,Efficacy
+291,NCT05227677,Homeostasis Model Assessment of Insulin Resistance (HOMA-IR),Baseline,Ashley,baseline,Efficacy
