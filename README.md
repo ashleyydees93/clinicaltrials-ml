@@ -1,112 +1,79 @@
 # Mining Type 2 Diabetes Clinical Trial Results
 
-**Team:** Caroline Pearson and Ashley Dees  
-**Status:** In progress — project setup  
-**Course project:** Professor-approved proposal
+**DSC 521 — Fall 2026**  
+**Ashley Dees and Caroline Pearson**
 
-## Project overview
+## Our project
 
-Type 2 diabetes clinical trials report treatment benefits, participant characteristics, and safety outcomes using varied terminology. Our goal is to use data from [ClinicalTrials.gov](https://clinicaltrials.gov/) to organize study outcome information and train a machine learning model to categorize outcome measures.
+We wanted to find out whether machine learning could help organize the measurements reported in Type 2 diabetes clinical trials. The challenge is that the same clinical term can mean different things depending on the study. HbA1c measured before treatment is a baseline characteristic; change in HbA1c after treatment can be an efficacy outcome.
 
-We will collect studies through **ClinicalTrials.gov API v2** using a **rolling one-year window based on the Results First Posted date**. We will document the exact start and end dates, retrieval date, search query, and study eligibility rules when data collection begins.
+We trained text classifiers to sort measurement titles and descriptions into **Baseline, Efficacy, or Safety**. This is a classification project, **not** an attempt to determine whether a treatment is effective or safe.
 
-**What the model will do:** Classify the *type of outcome measure* reported in a study. It will **not** determine whether a treatment is effective or safe.
+## Data collection and labeling
 
-## Professor-approved project goals
+We collected Type 2 diabetes study records through the [ClinicalTrials.gov API v2](https://clinicaltrials.gov/data-api/api), filtering on **Results First Posted** dates from **November 3, 2025, through November 2, 2026**. The data was retrieved on **November 5, 2026**.
 
-1. Create a reviewed sample of outcome measures labeled **baseline characteristics**, **efficacy**, or **safety**.
-2. Summarize outcome-category frequencies and reporting patterns by **Results First Posted year**.
-3. Train a **text classifier** to assign outcome categories.
+Our search returned **121 studies**. After screening for relevant Type 2 diabetes results and usable measurements, we kept **89 studies** and extracted **6,943 records** from baseline characteristics, outcome measures, and adverse events.
 
-The approved proposal defines our project scope. Supporting planning or evaluation notes are implementation guides, not replacements for the proposal.
+Because almost 78% of the extracted records were adverse-event entries, we sampled **100 measurements from each source section**, then divided the 300-record sample for labeling. We used written definitions, reviewed unclear records, and used a rule-guided quality check to flag inconsistencies. We excluded 33 sampled records, including records from a Type 1 diabetes study, leaving **267 labeled measurements from 76 studies**:
 
-## Data source and collection
+| Category | Records |
+| --- | ---: |
+| Baseline | 92 |
+| Efficacy | 86 |
+| Safety | 89 |
 
-- **Source:** [ClinicalTrials.gov API v2](https://clinicaltrials.gov/data-api/api)
-- **Population:** Studies relevant to Type 2 diabetes, screened using documented eligibility rules
-- **Time frame:** Rolling one-year Results First Posted window (exact dates to be recorded)
-- **Study identifier:** NCT ID
-- **Information to preserve where available:** Study details, outcome titles and descriptions, structured results, and adverse events
-- **Provenance:** Retain original source records and note when data was retrieved
+The source section didn't always match the clinical label. For example, some entries in the outcomes section were actually safety measures.
 
-A missing field is **not** evidence that an outcome or adverse event did not occur.
+## How we approached the machine learning
 
-## Machine learning approach
+We used the measurement title and description as our input text. Our classical models used **TF-IDF** to convert that text into weighted numerical features. We compared **Logistic Regression**, **Multinomial Naive Bayes**, and **Linear SVM**. We also fine-tuned **BioBERT**, which starts with language representations learned from biomedical publications.
 
-We plan to begin with a simple, interpretable supervised text-classification workflow:
+We split the dataset by **NCT study ID** rather than by individual measurement. That matters because measurements from the same trial often share wording; keeping studies together reduces the chance that the models see closely related records in both training and testing.
 
-1. Extract and clean outcome text from eligible studies.
-2. Write labeling rules and manually review a sample for the three approved categories. Flag ambiguous or out-of-scope outcomes instead of guessing.
-3. Convert outcome titles/descriptions into numeric text features using **TF-IDF**.
-4. Train a **Logistic Regression** classifier.
-5. Compare it with a **most-frequent-class** baseline (`DummyClassifier`).
-6. Evaluate on held-out studies using **macro-F1** (primary metric) and **accuracy**.
+The final team analysis uses **189 training measurements from 53 studies** and **78 held-out measurements from 23 studies**, with seed **143** for reproducibility. We used **macro-F1** as the primary metric so all three classes count equally, as well as accuracy, confusion matrices, and grouped cross-validation for the classical models.
 
-**Preventing data leakage:** All outcome rows belonging to the same NCT ID must remain in the same data split. We must never put outcomes from one study in both training and testing.
+## Final report results
 
-The algorithms above are our initial implementation choices and may be refined if evaluation indicates a reason to do so, while preserving the approved goals.
+The following results are from our final report's **78-record held-out test set**, rather than Ashley's earlier development split:
 
-## Planned workflow
+| Model | Test accuracy | Macro-F1 |
+| --- | ---: | ---: |
+| Most-frequent-class baseline | 0.282 | 0.147 |
+| Logistic Regression | 0.872 | 0.879 |
+| Naive Bayes | 0.872 | 0.879 |
+| Linear SVM | 0.885 | 0.890 |
+| BioBERT (prespecified seed 143) | 0.923 | 0.928 |
 
-- [ ] Set up the shared repository and local Python environments
-- [ ] Finalize and document the rolling one-year search dates and eligibility criteria
-- [ ] Query API v2, follow all pages, and save source records
-- [ ] Extract outcome measures and audit missing or duplicate fields
-- [ ] Agree on labeling rules and review outcome labels
-- [ ] Split labeled data by NCT ID; train baseline and text classifier
-- [ ] Evaluate results and examine classification errors
-- [ ] Create category-frequency and Results First Posted year visualizations
-- [ ] Document limitations and prepare the 20-minute presentation
+BioBERT's mean macro-F1 across five training seeds was **0.932 ± 0.015**. It performed best on this test set, although the sample is small and the size of the improvement over Logistic Regression is uncertain. All three classical models were close to one another.
 
-## Planned repository structure
+A recurring problem was **Baseline measurements being predicted as Efficacy**. We suspect that adding information about measurement timing could help with those cases.
 
-```text
-clinicaltrials-ml/
-├── README.md
-├── data/
-│   ├── raw/            # Original API responses (do not commit large/private data)
-│   └── processed/      # Cleaned and labeled data
-├── src/                # Collection, cleaning, and modeling scripts
-├── notebooks/          # Exploratory analysis
-├── figures/            # Saved charts
-├── presentation/       # Slides and presentation notes
-└── requirements.txt    # Python package dependencies (to be added)
-```
+## Code, report, and presentation
 
-These directories describe the **planned structure**; files and scripts will be added as work progresses.
+We worked separately on the [ashley branch](../../tree/ashley) and [caroline branch](../../tree/caroline). Ashley's branch contains the original collection, labeling, TF-IDF, Logistic Regression and Naive Bayes workflow. Caroline's branch contains the extended Linear SVM and BioBERT analysis, additional visualizations, and final presentation materials.
 
-## Working together remotely
+We are reviewing the changes before consolidating them on **main**. Until that merge is complete, some of the following paths are present on `caroline` rather than on `main`:
 
-Ashley and Caroline can use **VS Code on their own computers** while sharing code through GitHub.
+- `src/` — numbered scripts for collection, cleaning, labeling, model training, and evaluation
+- `screening/` — reviewed eligibility and labeling files
+- `data/processed/` — prepared data and selected model outputs
+- `results/clinicaltrials_ml_final_report.pdf` — project report
+- `results/clinicaltrials_ml_presentation.pdf` — presentation
+- `results/` — figures and model comparison tables
 
-1. **Pull** the latest changes before starting work.
-2. Create a **new branch** for your task rather than both editing the same file on the main branch.
-3. Make focused changes and commit with a meaningful message.
-4. **Push** your branch and open a **pull request** for the other person to review.
-5. Merge reviewed work into `main`; pull the updated `main` before beginning the next task.
+For the full final report and slides **before the merge**, use [Caroline's results folder](../../tree/caroline/results).
 
-Do not commit passwords, API tokens, virtual environments, or unnecessary large downloaded datasets. Use a `.gitignore` for local files. If we need to share larger data, we will agree on an appropriate shared location and document how to reproduce it.
+To reproduce the analysis, start from the project root, install the dependencies appropriate for the scripts, and run the numbered files in order. Some raw API downloads and generated model outputs are not stored in GitHub; the source-data collection steps and reviewed label files should be used to regenerate the necessary inputs. The BioBERT experiments also require PyTorch and Hugging Face packages. Please note that some script paths still need a final portability check.
 
-## Reproducibility and research cautions
+## Limitations and next steps
 
-- Keep a record of the API query, retrieval date, date limits, screening decisions, and exclusion counts.
-- Store NCT IDs so every outcome can be traced back to its study.
-- Document ambiguous labels, missing information, and class imbalance.
-- Use the same held-out studies when comparing the baseline and classifier.
-- Report category counts and clearly state their denominators.
-- Results First Posted trends describe **reporting records**, not changes in treatment effectiveness.
-- A one-year collection window may span only one or two calendar years; interpret year-by-year comparisons cautiously.
+Our labeled dataset is small, and the labels partly follow how ClinicalTrials.gov organizes its records. Some measurements are ambiguous without study-specific context or timing. We also collected roughly one year of results postings, so the monthly summaries are descriptive rather than evidence of long-term trends.
 
-## Final deliverables
-
-- Reproducible data collection and preprocessing code
-- Reviewed outcome-label dataset and labeling rules
-- Trained classifier, baseline comparison, and evaluation results
-- Outcome-category summaries and visualizations
-- Project documentation and a **20-minute presentation**
+If we continued this work, we'd label more difficult examples, add timing or study context, and test the models on new studies and other conditions.
 
 ## References
 
 - [ClinicalTrials.gov](https://clinicaltrials.gov/)
 - [ClinicalTrials.gov API documentation](https://clinicaltrials.gov/data-api/api)
-- Scikit-learn documentation: [TF-IDF](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html), [Logistic Regression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html), and [GroupShuffleSplit](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GroupShuffleSplit.html)
+- [scikit-learn](https://scikit-learn.org/stable/)
