@@ -1,5 +1,7 @@
 anyio==4.15.1
+accelerate==1.16.0
 appnope==1.0.0
+datasets==5.2.0
 argon2-cffi==25.1.0
 argon2-cffi-bindings==26.1.0
 arrow==1.4.0
@@ -17,7 +19,10 @@ comm==0.2.3
 contourpy==1.4.0
 cycler==0.12.1
 debugpy==1.8.22
+torch==2.15.0
+transformers==5.23.0
 defusedxml==0.7.1
+et_xmlfile==2.0.0
 executing==2.3.0
 fastjsonschema==2.22.2
 fonttools==4.67.0
@@ -64,6 +69,7 @@ nbformat==5.11.1
 nest-asyncio2==1.7.4
 notebook==7.6.3
 notebook_shim==0.2.4
+openpyxl==3.1.5
 numpy==2.5.4
 packaging==26.3
 pandas==3.1.0
